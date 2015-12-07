@@ -7,3 +7,19 @@ bin/ is used to contain compiled executables.
 
 Please refer to the change log at http://alchemy.cs.washington.edu/
 for the latest changes to Alchemy.
+
+
+To build alchemy:
+Requirements:
+g++, flex, bison-2.7.
+Note that it does not compile with bison-3.0 because of some incompatibilities.
+
+Build instructions:
+Either git-clone or extract the tar archive in $PROJECT_HOME
+
+mkdir -p $PROJECT_HOME/bin/obj
+cd $PROJECT_HOME/src
+
+make depend
+make
+
