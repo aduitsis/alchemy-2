@@ -60,9 +60,9 @@ struct LvrNormPropagation
 	*/
 	void processConstants(vector<WClause*>& CNF, Atom* atom, bool setTrue)
 	{
-		for(int i=0;i<CNF.size();i++)
+		for(unsigned i=0;i<CNF.size();i++)
 		{
-			for(int j=0;j<CNF[i]->atoms.size();j++)
+			for(unsigned j=0;j<CNF[i]->atoms.size();j++)
 			{
 				if(CNF[i]->atoms[j]->symbol->id == atom->symbol->id)
 				{
@@ -424,9 +424,9 @@ void updateSharedTerms(WClause* clause, int atomId, map<int,vector<bool> >&  sha
 		while(1)
 		{
 			changed=false;
-			for(unsigned int i=0;i<CNF.size();i++)
+			for(unsigned i=0;i<CNF.size();i++)
 			{
-				for(int j=0;j<CNF[i]->atoms.size();j++)
+				for(unsigned j=0;j<CNF[i]->atoms.size();j++)
 				{
 					map<int,vector<bool> >::iterator it = sharedTermsMap.find(CNF[i]->atoms[j]->symbol->id);
 					if(it==sharedTermsMap.end())
@@ -463,7 +463,7 @@ void updateSharedTerms(WClause* clause, int atomId, map<int,vector<bool> >&  sha
 			//CNF[i]->print();
 		for(unsigned int i=0;i<CNF.size();i++)
 		{
-			for(int j=0;j<CNF[i]->atoms.size();j++)
+			for(unsigned j=0;j<CNF[i]->atoms.size();j++)
 			{
 				if(CNF[i]->atoms[j]->symbol->id == atomIdToRemove)
 				{

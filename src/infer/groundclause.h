@@ -217,7 +217,7 @@ class GroundClause
    */
   void removeGndPred(const int& gndPred)
   {
-    for (int i = 0; i < gndPredIndexes_->size(); i++)
+    for (unsigned i = 0; i < gndPredIndexes_->size(); i++)
     {
       if (gndPred == (*gndPredIndexes_)[i])
       {
@@ -238,7 +238,7 @@ class GroundClause
    */
   void changeGndPredIndex(const int& oldIdx, const int& newIdx)
   {
-    for (int i = 0; i < gndPredIndexes_->size(); i++)
+    for (unsigned i = 0; i < gndPredIndexes_->size(); i++)
     {
       if (oldIdx == (*gndPredIndexes_)[i])
       {
@@ -300,7 +300,7 @@ class GroundClause
     Array<unsigned int>* intArrRep = new Array<unsigned int>;
 
       // For each predicate
-    for (int i = 0; i < gndPredIndexes_->size(); i++)
+    for (unsigned i = 0; i < gndPredIndexes_->size(); i++)
     {
         // For each pred 1 (if pos.) or 0 (if neg.) is appended to intArrRep
       if ((*gndPredIndexes_)[i] > 0)

@@ -89,7 +89,7 @@ class DualMap
   { 
     intToStrArr_ = new Array<const char*>; 
     strToIntMap_ = new StrToIntMap;
-    for (int i = 0; i < dm.intToStrArr_->size(); i++)
+    for (unsigned i = 0; i < dm.intToStrArr_->size(); i++)
       insert((*(dm.intToStrArr_))[i]);
     compress();
   }
@@ -97,7 +97,7 @@ class DualMap
 
   ~DualMap() 
   {
-    for (int i = 0; i < intToStrArr_->size(); i++)
+    for (unsigned i = 0; i < intToStrArr_->size(); i++)
       delete [] (*intToStrArr_)[i];
     delete intToStrArr_;
     delete strToIntMap_;
@@ -106,7 +106,7 @@ class DualMap
 
     // Returns const char* corresponding to i or NULL if there is no such char*.
     // The returned const char* should not be deleted.
-  const char* getStr(const int& i) const
+  const char* getStr(const unsigned& i) const
   { 
     if (0<= i && i < intToStrArr_->size())
       return (*intToStrArr_)[i];

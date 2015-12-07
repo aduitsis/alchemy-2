@@ -20,7 +20,7 @@ struct Decomposer
 	Decomposer(){}
 	Decomposer(vector<LvrTerm*> decomposer_terms_, map<int,int> predicate_positions_,map<int,int> atomCounter_,
 		map<int,int> norm_predicate_positions_):decomposer_terms(decomposer_terms_),
-		predicate_positions(predicate_positions_),atomCounter(atomCounter_),deletionMarker(false),norm_predicate_positions(norm_predicate_positions_)
+          predicate_positions(predicate_positions_),norm_predicate_positions(norm_predicate_positions_),atomCounter(atomCounter_),deletionMarker(false)
 	{}
 	void print()
 	{

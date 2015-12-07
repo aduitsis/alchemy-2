@@ -337,7 +337,7 @@ bool ARGS::checkMissing(bool printMessage)
   // THIS FUNCTION WILL NEED RE-WRITING AS libg++ 2.2 fixes bugs.
   // Still currently can't have lines with no characters in them. It messes
   // up libg++ 2.2's internal state.
-ARGS::ArgsRetCode ARGS::parseFromFile(char* fileName)
+ARGS::ArgsRetCode ARGS::parseFromFile(const char* fileName)
 {
   makeFound();
   ifstream ifile(fileName);

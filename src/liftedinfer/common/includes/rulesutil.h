@@ -11,7 +11,7 @@ struct LRulesUtil
 	{
 		isolatedTerms.clear();
 		isolatedTerms.resize(atom->terms.size());
-		int falseCnt = 0;
+		unsigned falseCnt = 0;
 		for(unsigned int i=0;i<isolatedTerms.size();i++)
 		{
 			//a constant is never isolated
@@ -85,7 +85,7 @@ struct LRulesUtil
 					continue;
 				if(find(occurences.begin(),occurences.end(),j)!=occurences.end())
 					continue;
-				int foundcount=0;
+				unsigned foundcount=0;
 				for(unsigned int k=0;k<clauses[i]->atoms[j]->terms.size();k++)
 				{
 					if(clauses[i]->atoms[j]->terms[k]->domain.size()==1)
@@ -101,7 +101,7 @@ struct LRulesUtil
 	}
 
 private:
-	static bool checkOccurrence(LvrTerm* term, WClause* clause, int exceptIndex)
+	static bool checkOccurrence(LvrTerm* term, WClause* clause, unsigned exceptIndex)
 	{
 		for(unsigned int i=0;i<clause->atoms.size();i++)
 		{

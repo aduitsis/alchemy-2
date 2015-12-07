@@ -284,7 +284,7 @@ void LMParser::parseDomainString(string line,fstream& filestr)
 
 void LMParser::parsePredicateString(string line)
 {
-	size_t pos;
+  //size_t pos;
 	int startpos = line.find(LEFTPRNTH);
 	int endpos = line.find(RIGHTPRNTH);
 	string symbolName = line.substr(0,startpos);
@@ -337,9 +337,9 @@ void LMParser::parseInputMLNFile(string filename)
 		exit(-1);
 	}
 	char* buf = new char[1024];
-	int cnt=0;
+	//int cnt=0;
 	ParsingState state;
-	size_t pos;
+	//size_t pos;
 	while(filestr)
 	{
 		filestr.getline(buf,1024);
@@ -347,7 +347,7 @@ void LMParser::parseInputMLNFile(string filename)
 		line.erase( remove(line.begin(), line.end(), ' '), line.end() );
 		if(line.size()==0)
 			continue;
-		PDomain* domain;
+		//PDomain* domain;
 		if(line.find(DOMAINSTART)!=string::npos)
 		{
 			//set the sate to parsing domains
@@ -439,7 +439,7 @@ void LMParser::parseDB(string filename)
 		return;
 	}
 	char* buf = new char[1024];
-	int cnt=0;
+	//int cnt=0;
 	size_t pos;
 	while(filestr)
 	{

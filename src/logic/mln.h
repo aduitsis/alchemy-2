@@ -109,7 +109,7 @@ class MLN
     
     if (predIdToClausesMap_)
     {
-      for (int i = 0; i < predIdToClausesMap_->size(); i++)
+      for (unsigned i = 0; i < predIdToClausesMap_->size(); i++)
         if ((*predIdToClausesMap_)[i]) 
         {
           (*predIdToClausesMap_)[i]->deleteItemsAndClear();
@@ -144,7 +144,7 @@ class MLN
   int getNumHardClauses() const
   {
   	int numHardClauses = 0;
-  	for (int i = 0; i < clauses_->size(); i++)
+  	for (unsigned i = 0; i < clauses_->size(); i++)
   	{
   	  if ((*clauses_)[i]->isHardClause()) numHardClauses++;
   	}
@@ -316,7 +316,7 @@ class MLN
 
       //update MLNClauseInfo's predIdsClauseIndexes
     Array<PredIdClauseIndex*>& piciArr = ci->predIdsClauseIndexes;
-    for (int i = 0; i < piciArr.size(); i++)
+    for (unsigned i = 0; i < piciArr.size(); i++)
     {
       int predId = piciArr[i]->predId;
       int remIdx = *(piciArr[i]->clauseIndex);
@@ -343,7 +343,7 @@ class MLN
 
       //update MLNClauseInfo's formulaClauseIndexes
     Array<FormulaClauseIndexes*>& fciArr = ci->formulaClauseIndexes;
-    for (int i = 0; i < fciArr.size(); i++)
+    for (unsigned i = 0; i < fciArr.size(); i++)
     {
       int fidx = *(fciArr[i]->formulaIndex);
       int remIdx = *(fciArr[i]->clauseIndex);
@@ -399,7 +399,7 @@ class MLN
   void rehashClauses()
   {
     ClauseHashArray* newha =  new ClauseHashArray;
-    for (int i = 0; i < clauses_->size(); i++) 
+    for (unsigned i = 0; i < clauses_->size(); i++) 
     {
       int a = newha->append((*clauses_)[i]);
       assert(a >= 0); a = 0; //avoid compilation warning
@@ -408,12 +408,12 @@ class MLN
     clauses_ = newha;
  
 
-    for (int i = 0; i < formAndClausesArray_->size(); i++)
+    for (unsigned i = 0; i < formAndClausesArray_->size(); i++)
     {
       FormulaAndClauses* fac = (*formAndClausesArray_)[i];
       IndexClauseHashArray* newArr = new IndexClauseHashArray;
       IndexClauseHashArray* curArr = fac->indexClauses;
-      for (int j = 0; j < curArr->size(); j++)
+      for (unsigned j = 0; j < curArr->size(); j++)
       {
         int a = newArr->append((*curArr)[j]);
         assert((*curArr)[j]->index == a); a = 0; //avoid compilation warning
@@ -432,7 +432,7 @@ class MLN
   {
       //find the max of the (absolute) soft clause wts
     double maxSoftWt = 0;
-    for (int i = 0; i < clauses_->size(); i++)
+    for (unsigned i = 0; i < clauses_->size(); i++)
     {
       Clause* c = (*clauses_)[i];
       if (!c->isHardClause() && !isExistUniqueClause(c))
@@ -530,7 +530,7 @@ cout << "m3" << endl;
     assert(0 <= i && i < clauses_->size());
     Array<FormulaClauseIndexes*>& fciArr 
       = (*clauseInfos_)[i]->formulaClauseIndexes;
-    for (int i = 0; i < fciArr.size(); i++)
+    for (unsigned i = 0; i < fciArr.size(); i++)
       if ((*formAndClausesArray_)[*(fciArr[i]->formulaIndex)]->hasExist) 
         return true;
     return false;
@@ -554,7 +554,7 @@ cout << "m3" << endl;
     assert(0 <= i && i < clauses_->size());
     Array<FormulaClauseIndexes*>& fciArr 
       = (*clauseInfos_)[i]->formulaClauseIndexes;
-    for (int i = 0; i < fciArr.size(); i++)
+    for (unsigned i = 0; i < fciArr.size(); i++)
       if ((*formAndClausesArray_)[*(fciArr[i]->formulaIndex)]->isExistUnique) 
         return true;
     return false;
@@ -578,7 +578,7 @@ cout << "m3" << endl;
     assert(0 <= i && i < clauses_->size());
     Array<FormulaClauseIndexes*>& fciArr 
       = (*clauseInfos_)[i]->formulaClauseIndexes;
-    for (int i = 0; i < fciArr.size(); i++)
+    for (unsigned i = 0; i < fciArr.size(); i++)
     {
       FormulaAndClauses*fnc=(*formAndClausesArray_)[*(fciArr[i]->formulaIndex)];
       if (!fnc->hasExist && !fnc->isExistUnique) return true;
@@ -619,7 +619,7 @@ cout << "m3" << endl;
   }
 
   void getClauses(Array<Clause*>* const & clauses) const
-  { for (int i = 0; i < clauses_->size();i++) clauses->append((*clauses_)[i]); }
+  { for (unsigned i = 0; i < clauses_->size();i++) clauses->append((*clauses_)[i]); }
 
   void setClauses(ClauseHashArray* const & clauses)
   { clauses_ = clauses; }
@@ -675,7 +675,7 @@ cout << "m3" << endl;
   {
     if (predIdToClausesMap_)
     {
-      for (int i = 0; i < predIdToClausesMap_->size(); i++)
+      for (unsigned i = 0; i < predIdToClausesMap_->size(); i++)
         if ((*predIdToClausesMap_)[i]) 
         {
           (*predIdToClausesMap_)[i]->deleteItemsAndClear();
@@ -725,7 +725,7 @@ cout << "m3" << endl;
   void setClauseInfoPriorMeansToClauseWts()
   {
     assert(clauses_->size() == clauseInfos_->size());
-    for (int i = 0; i < clauseInfos_->size(); i++)
+    for (unsigned i = 0; i < clauseInfos_->size(); i++)
       (*clauseInfos_)[i]->priorMean = (*clauses_)[i]->getWt();
   }
 
@@ -733,7 +733,7 @@ cout << "m3" << endl;
   void getClauseWts(Array<double>& wts) const
   {
     wts.clear();
-    for (int i = 0; i < clauses_->size(); i++) 
+    for (unsigned i = 0; i < clauses_->size(); i++) 
       wts.append((*clauses_)[i]->getWt());
   }
 
@@ -741,7 +741,7 @@ cout << "m3" << endl;
   void setClauseWts(Array<double>& wts) 
   {
     assert (wts.size() == clauses_->size());
-    for (int i = 0; i < clauses_->size(); i++) 
+    for (unsigned i = 0; i < clauses_->size(); i++) 
       (*clauses_)[i]->setWt(wts[i]);
   }
 
@@ -873,13 +873,13 @@ cout << "m3" << endl;
   void compress()
   {
     clauses_->compress();
-    for (int i = 0; i < clauseInfos_->size(); i++) 
+    for (unsigned i = 0; i < clauseInfos_->size(); i++) 
       (*clauseInfos_)[i]->compress();
     clauseInfos_->compress();
-    for (int i = 0; i < formAndClausesArray_->size(); i++)
+    for (unsigned i = 0; i < formAndClausesArray_->size(); i++)
       (*formAndClausesArray_)[i]->indexClauses->compress();
     formAndClausesArray_->compress();
-    for (int i = 0; i < predIdToClausesMap_->size(); i++)
+    for (unsigned i = 0; i < predIdToClausesMap_->size(); i++)
       if ((*predIdToClausesMap_)[i]) (*predIdToClausesMap_)[i]->compress();
     predIdToClausesMap_->compress();
   }
@@ -895,25 +895,25 @@ cout << "m3" << endl;
     const FormulaAndClausesArray* fncArr = formAndClausesArray_;
     
     Array<int> fncArrIdxs;
-    for (int i = 0; i < fncArr->size(); i++)
+    for (unsigned i = 0; i < fncArr->size(); i++)
       if (!(*fncArr)[i]->hasExist && !(*fncArr)[i]->isExistUnique) 
         fncArrIdxs.append(i);
 
-    for (int i = 0; i < fncArr->size(); i++)
+    for (unsigned i = 0; i < fncArr->size(); i++)
       if ((*fncArr)[i]->isExistUnique) 
         fncArrIdxs.append(i);
     
-    for (int i = 0; i < fncArr->size(); i++)
+    for (unsigned i = 0; i < fncArr->size(); i++)
       if ((*fncArr)[i]->hasExist) 
         fncArrIdxs.append(i);
 
       // for each user-specified formula
-    for (int ii = 0; ii < fncArrIdxs.size(); ii++)  
+    for (unsigned ii = 0; ii < fncArrIdxs.size(); ii++)  
     {
       int i = fncArrIdxs[ii];
       double totalWt = 0;
       IndexClauseHashArray* indexClauses = (*fncArr)[i]->indexClauses;
-      for (int j = 0; j < indexClauses->size(); j++)
+      for (unsigned j = 0; j < indexClauses->size(); j++)
       {
         Clause* c = (*indexClauses)[j]->clause;
         totalWt += c->getWt()/getNumParentFormulas(c);
@@ -949,7 +949,7 @@ cout << "m3" << endl;
         {
             // output clauses derived from the original formula and their
             // weights
-          for (int j = 0; j < indexClauses->size(); j++)
+          for (unsigned j = 0; j < indexClauses->size(); j++)
           {
             Clause* c = (*indexClauses)[j]->clause;    
             if ((*fncArr)[i]->isHard)
@@ -970,7 +970,7 @@ cout << "m3" << endl;
       out << endl;
     }
     
-    for (int i = 0; i < hybridClauses_->size(); i++)
+    for (unsigned i = 0; i < hybridClauses_->size(); i++)
     {
       Clause* c = (*hybridClauses_)[i];
 
@@ -1002,13 +1002,13 @@ cout << "m3" << endl;
 
       // for each user-specified formula
     const FormulaAndClausesArray* fncArr = formAndClausesArray_;
-    for (int i = 0; i < fncArr->size(); i++)
+    for (unsigned i = 0; i < fncArr->size(); i++)
     {
       if ((*fncArr)[i]->hasExist || (*fncArr)[i]->isExistUnique) continue;
     
       double totalWt = 0;
       IndexClauseHashArray* indexClauses = (*fncArr)[i]->indexClauses;
-      for (int j = 0; j < indexClauses->size(); j++)
+      for (unsigned j = 0; j < indexClauses->size(); j++)
       {
         Clause* c = (*indexClauses)[j]->clause;
         //assert(clauseOrdering->find(c) >= 0);
@@ -1037,7 +1037,7 @@ cout << "m3" << endl;
       {
           // output the clauses derived from the original formula and their
           // weights
-        for (int j = 0; j < indexClauses->size(); j++)
+        for (unsigned j = 0; j < indexClauses->size(); j++)
         {
           Clause* c = (*indexClauses)[j]->clause;    
           out.width(outprec); 
@@ -1082,7 +1082,7 @@ cout << "m3" << endl;
                                const bool& divWtAmongExistFormulas=false) const
   {
     Array<Clause*> ca;
-    for (int i = 0; i < clauses_->size(); i++) 
+    for (unsigned i = 0; i < clauses_->size(); i++) 
     {
       if ( !includeExistClauses && 
            !clauseInNonExistAndNonExistUniqueFormulaCNF(i) ) continue;
@@ -1091,7 +1091,7 @@ cout << "m3" << endl;
 
     if (sortByLen) Clause::sortByLen(ca);
     ClauseHashArray cha;
-    for (int i = 0; i < ca.size(); i++) cha.append(ca[i]);
+    for (unsigned i = 0; i < ca.size(); i++) cha.append(ca[i]);
 
     printClausesWithWeights(out, domain, &cha,startIdx,divWtAmongExistFormulas);
   }
@@ -1102,7 +1102,7 @@ cout << "m3" << endl;
     out.setf(ios_base::left, ios_base::adjustfield);    
     out.precision(6);
     assert(clauseInfos_->size() == clauses_->size());
-    for (int i = 0; i < clauses_->size(); i++)
+    for (unsigned i = 0; i < clauses_->size(); i++)
     {
       out << i << ":  "; out.width(14); 
       out << (*clauseInfos_)[i]->priorMean; out.width(0); out << " "; 
@@ -1117,7 +1117,7 @@ cout << "m3" << endl;
   {
     out.setf(ios_base::left, ios_base::adjustfield);
     out.precision(6);
-    for (int i = 0; i < formAndClausesArray_->size(); i++)
+    for (unsigned i = 0; i < formAndClausesArray_->size(); i++)
     {
       FormulaAndClauses* fnc = (*formAndClausesArray_)[i];
       out << i << ":  "; out.width(14); 
@@ -1141,7 +1141,7 @@ cout << "m3" << endl;
     Array<PredIdClauseIndex*>& piciArr = ci->predIdsClauseIndexes;
     hash_set<int> seenPredIds;
     const Array<Predicate*>* preds = clause->getPredicates();
-    for (int i = 0; i < preds->size(); i++)
+    for (unsigned i = 0; i < preds->size(); i++)
     {
       int predId = (*preds)[i]->getId();
         //if we have already noted that clause contains pred
@@ -1190,7 +1190,7 @@ cout << "m3" << endl;
     Array<FormulaClauseIndexes*>& fciArr 
       = (*clauseInfos_)[i]->formulaClauseIndexes;
     int n = 0;
-    for (int i = 0; i < fciArr.size(); i++)
+    for (unsigned i = 0; i < fciArr.size(); i++)
     {
       int fidx = *(fciArr[i]->formulaIndex);
       FormulaAndClauses* fnc = (*formAndClausesArray_)[fidx];
@@ -1252,7 +1252,7 @@ cout << "m3" << endl;
       double totalWt = 0;
       IndexClauseHashArray* indexClauses 
         = (*formAndClausesArray_)[i]->indexClauses;
-      for (int j = 0; j < indexClauses->size(); j++)
+      for (unsigned j = 0; j < indexClauses->size(); j++)
       {
         Clause* c = (*indexClauses)[j]->clause;
         totalWt += c->getWt()/getNumParentFormulas(c);

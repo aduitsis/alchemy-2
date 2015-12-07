@@ -18,11 +18,11 @@ struct LClusterCreator
 	{
 		//make a copy of the MLN
 		mln = new LvrMLN();
-		for(int i=0;i<mln_->clauses.size();i++)
+		for(unsigned i=0;i<mln_->clauses.size();i++)
 		{
 			mln->clauses.push_back(LvrMLN::create_new_clause(mln_->clauses[i]));
 		}
-		for(int i=0;i<mln_->symbols.size();i++)
+		for(unsigned i=0;i<mln_->symbols.size();i++)
 		{
 			mln->symbols.push_back(LvrMLN::create_new_symbol(mln_->symbols[i]));
 		}

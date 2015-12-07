@@ -250,8 +250,8 @@ void LClusterCreator::startRandomClustering(LvrParams* params)
 		newClauses.clear();
 		//LVRClusterList[0]->printAssignment();
 	}
-	int bestCouplingFactor = 0;
-	int iter=0;
+	//int bestCouplingFactor = 0;
+	//int iter=0;
 	while(1)
 	{
 
@@ -283,7 +283,7 @@ void LClusterCreator::startRandomClustering(LvrParams* params)
 		computeClusterMB();
 		int currPTPCost = 0;
 		int currSpaceCost = 0;
-		int couplingFactor = 0;
+		//int couplingFactor = 0;
 		bool clusteringNP = false;
 		bool clusterCostExceeded = false;
 
@@ -363,8 +363,8 @@ void LClusterCreator::startClustering(LvrParams* params)
 	int level = 0;
 	initializeClusters();
 	LogDouble PTPCost;
-	int spaceCost = 0;
-	int CF = 0;
+	//int spaceCost = 0;
+	//int CF = 0;
 	LNormalizer ln(*mln);
 	int baselinePTPCost=0;
 	int baselineSpaceCost = 0;
@@ -434,8 +434,8 @@ void LClusterCreator::startClustering(LvrParams* params)
 			mergeCluster(clusterCombinations[i]->clusterIndexes.at(0),clusterCombinations[i]->clusterIndexes.at(1));
 			computeClusterMB();
 			LogDouble totalPTPCost;
-			int totalSpace = 0;
-			int couplingFactor = 0;
+			//int totalSpace = 0;
+			//int couplingFactor = 0;
 			bool clusteringNP = false;
 			bool clusterCostExceeded = false;
 			currPTPCost = 0;

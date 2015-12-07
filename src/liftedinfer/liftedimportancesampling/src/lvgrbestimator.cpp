@@ -89,7 +89,7 @@ bool LvgRBEstimator::decomposeCNF(vector<WClause*>& CNF,int& powerFactor)
 		for(unsigned int i=0;i<decomposer_list.size();i++)
 		{
 			powerFactor*=decomposer_list[i]->decomposer_terms[0]->domain.size();
-			int domSize = decomposer_list[i]->decomposer_terms[0]->domain.size();
+			int domSize = decomposer_list[i]->decomposer_terms[0]->domain.size(); (void) domSize;
 			for(unsigned int j=0;j<decomposer_list[i]->decomposer_terms.size();j++)
 			{
 				//make a copy of the pre-decomp domain
@@ -222,7 +222,7 @@ LogDouble LvgRBEstimator::weightedModelCount(vector<WClause*>& CNF,int parentId,
 			}
 			Atom* atom = LvrMLN::create_new_atom(tmpatom);
 			int singletonIndex;
-			bool singleton = atom->isSingletonAtom(singletonIndex);
+			bool singleton = atom->isSingletonAtom(singletonIndex); (void) singleton;
 			/*if(!singleton && !atom->isConstant())
 			{
 				//choose an index randomly

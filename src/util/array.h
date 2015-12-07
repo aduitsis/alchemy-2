@@ -245,9 +245,9 @@ class Array
   }
 
 
-  int size() const { return numItems_; }
+  unsigned size() const { assert (numItems_ >= 0); return numItems_; }
 
-  int maxItems() const { return maxItems_; }
+  unsigned maxItems() const { return maxItems_; }
 
   bool empty() const { return size()==0; } 
 

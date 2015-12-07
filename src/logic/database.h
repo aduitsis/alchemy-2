@@ -133,7 +133,7 @@ class Database
   {
 	lazyFlag_ = false;
 	performingInference_ = false;
-	assert(closedWorld.size() == domain_->getNumPredicates());
+	assert(closedWorld.size() == (unsigned) domain_->getNumPredicates());
     int numFOPreds = domain_->getNumPredicates();
 
     closedWorld_.growToSize(numFOPreds);
@@ -178,7 +178,7 @@ class Database
       termMultByPred_[i] = matArr;
 
       int numGnd = 1;
-      for (int j = 0; j < t->getNumTerms(); j++)
+      for (unsigned j = 0; j < t->getNumTerms(); j++)
       {
         int numConstByType =
           domain_->getNumConstantsByType(t->getTermTypeAsInt(j));
@@ -210,13 +210,13 @@ class Database
     oppEqGndPreds_ = db.oppEqGndPreds_;
 
 	termMultByPred_.growToSize(db.termMultByPred_.size(), NULL);
-	for (int i = 0; i < db.termMultByPred_.size(); i++)
+	for (unsigned i = 0; i < db.termMultByPred_.size(); i++)
 	{
 	  if (db.termMultByPred_[i])
 	  {
 	    Array<MultAndType>* matArr = new Array<MultAndType>;
       	matArr->growToSize(db.termMultByPred_[i]->size());
-      	for (int j = 0; j < db.termMultByPred_[i]->size(); j++)
+      	for (unsigned j = 0; j < db.termMultByPred_[i]->size(); j++)
       	{
 		  MultAndType mat;
 		  mat.first = (*db.termMultByPred_[i])[j].first;
@@ -231,7 +231,7 @@ class Database
     {
       trueEvIndex_ = new Array<LongLongHashMap>(db.trueEvIndex_->size());
       trueEvIndex_->growToSize(db.trueEvIndex_->size());
-      for (int i = 0; i < db.trueEvIndex_->size(); i++)
+      for (unsigned i = 0; i < db.trueEvIndex_->size(); i++)
       {
         (*trueEvIndex_)[i] = (*db.trueEvIndex_)[i];
       }
@@ -241,7 +241,7 @@ class Database
     {
       falseEvIndex_ = new Array<LongLongHashMap>(db.falseEvIndex_->size());
       falseEvIndex_->growToSize(db.falseEvIndex_->size());
-      for (int i = 0; i < db.falseEvIndex_->size(); i++)
+      for (unsigned i = 0; i < db.falseEvIndex_->size(); i++)
       {
         (*falseEvIndex_)[i] = (*db.falseEvIndex_)[i];
       }
@@ -251,7 +251,7 @@ class Database
     {
       activeIndex_ = new Array<LongLongHashMap>(db.activeIndex_->size());
       activeIndex_->growToSize(db.activeIndex_->size());
-      for (int i = 0; i < db.activeIndex_->size(); i++)
+      for (unsigned i = 0; i < db.activeIndex_->size(); i++)
       {
         (*activeIndex_)[i] = (*db.activeIndex_)[i];
       }
@@ -261,7 +261,7 @@ class Database
 	{
 	  predIdToNumTF_ = new Array<NumTrueFalse>(db.predIdToNumTF_->size());
 	  predIdToNumTF_->growToSize(db.predIdToNumTF_->size());
-	  for (int i = 0; i < db.predIdToNumTF_->size(); i++)
+	  for (unsigned i = 0; i < db.predIdToNumTF_->size(); i++)
 	  {
 	  	(*predIdToNumTF_)[i] = (*db.predIdToNumTF_)[i];
 	  }
@@ -271,7 +271,7 @@ class Database
 	{
 	  truePredIdxSet_ = new Array<LongLongHashSet>(db.truePredIdxSet_->size());
 	  truePredIdxSet_->growToSize(db.truePredIdxSet_->size());
-	  for (int i = 0; i < db.truePredIdxSet_->size(); i++)
+	  for (unsigned i = 0; i < db.truePredIdxSet_->size(); i++)
 	  {
 	  	(*truePredIdxSet_)[i] = (*db.truePredIdxSet_)[i];
 	  }
@@ -281,7 +281,7 @@ class Database
 	{	
 	  falsePredIdxSet_ = new Array<LongLongHashSet>();
 	  falsePredIdxSet_->growToSize(db.falsePredIdxSet_->size());
-	  for (int i = 0; i < db.falsePredIdxSet_->size(); i++)
+	  for (unsigned i = 0; i < db.falsePredIdxSet_->size(); i++)
 	  	(*falsePredIdxSet_)[i] = (*db.falsePredIdxSet_)[i];
 	}
 	
@@ -289,7 +289,7 @@ class Database
 	{
 	  activePredIdxSet_ = new Array<LongLongHashSet>();
 	  activePredIdxSet_->growToSize(db.activePredIdxSet_->size());
-	  for (int i = 0; i < db.activePredIdxSet_->size(); i++)
+	  for (unsigned i = 0; i < db.activePredIdxSet_->size(); i++)
 	  	(*activePredIdxSet_)[i] = (*db.activePredIdxSet_)[i];
 	}
 	
@@ -297,7 +297,7 @@ class Database
 	{
 	  evidencePredIdxSet_ = new Array<LongLongHashSet>();
 	  evidencePredIdxSet_->growToSize(db.evidencePredIdxSet_->size());
-	  for (int i = 0; i < db.evidencePredIdxSet_->size(); i++)
+	  for (unsigned i = 0; i < db.evidencePredIdxSet_->size(); i++)
 	  	(*evidencePredIdxSet_)[i] = (*db.evidencePredIdxSet_)[i];
 	}
 
@@ -305,51 +305,51 @@ class Database
 	{
 	  deactivatedPredIdxSet_ = new Array<LongLongHashSet>();
 	  deactivatedPredIdxSet_->growToSize(db.deactivatedPredIdxSet_->size());
-	  for (int i = 0; i < db.deactivatedPredIdxSet_->size(); i++)
+	  for (unsigned i = 0; i < db.deactivatedPredIdxSet_->size(); i++)
 	  	(*deactivatedPredIdxSet_)[i] = (*db.deactivatedPredIdxSet_)[i];
 	}
   }
   
   ~Database()
   {
-    for (int i = 0; i < termMultByPred_.size(); i++) 
+    for (unsigned i = 0; i < termMultByPred_.size(); i++) 
       if (termMultByPred_[i]) delete termMultByPred_[i];
     termMultByPred_.clearAndCompress();
 
-    for (int i = 0; i < truePredIdxSet_->size(); i++)
+    for (unsigned i = 0; i < truePredIdxSet_->size(); i++)
       (*truePredIdxSet_)[i].clear();
     delete truePredIdxSet_;
 	  	
-    for (int i = 0; i < falsePredIdxSet_->size(); i++)
+    for (unsigned i = 0; i < falsePredIdxSet_->size(); i++)
       (*falsePredIdxSet_)[i].clear();
     delete falsePredIdxSet_;
 
     if (lazyFlag_)
     {
-      for (int i = 0; i < activePredIdxSet_->size(); i++)
+      for (unsigned i = 0; i < activePredIdxSet_->size(); i++)
         (*activePredIdxSet_)[i].clear();
       delete activePredIdxSet_;
 
-      for (int i = 0; i < evidencePredIdxSet_->size(); i++)
+      for (unsigned i = 0; i < evidencePredIdxSet_->size(); i++)
         (*evidencePredIdxSet_)[i].clear();
       delete evidencePredIdxSet_;
 	  	
-      for (int i = 0; i < deactivatedPredIdxSet_->size(); i++)
+      for (unsigned i = 0; i < deactivatedPredIdxSet_->size(); i++)
         (*deactivatedPredIdxSet_)[i].clear();
       delete deactivatedPredIdxSet_;
     }
 
     if (predIdToNumTF_)  { delete predIdToNumTF_; predIdToNumTF_ = NULL; }
 
-    for (int i = 0; i < trueEvIndex_->size(); i++)
+    for (unsigned i = 0; i < trueEvIndex_->size(); i++)
       (*trueEvIndex_)[i].clear();
     delete trueEvIndex_;
 
-    for (int i = 0; i < falseEvIndex_->size(); i++)
+    for (unsigned i = 0; i < falseEvIndex_->size(); i++)
       (*falseEvIndex_)[i].clear();
     delete falseEvIndex_;
 
-    for (int i = 0; i < activeIndex_->size(); i++)
+    for (unsigned i = 0; i < activeIndex_->size(); i++)
       (*activeIndex_)[i].clear();
     delete activeIndex_;
 
@@ -357,7 +357,7 @@ class Database
   
   void compress()
   {
-    for (int i = 0; i < termMultByPred_.size(); i++) 
+    for (unsigned i = 0; i < termMultByPred_.size(); i++) 
       if (termMultByPred_[i]) termMultByPred_[i]->compress();
     termMultByPred_.compress();
   }
@@ -365,17 +365,17 @@ class Database
   void printInfo()
   {
     cout << "GNDINGS " << endl;
-    for (int i = 0; i < numberOfGroundings_.size(); i++)
+    for (unsigned i = 0; i < numberOfGroundings_.size(); i++)
       cout << i << ": " << numberOfGroundings_[i] << endl;
       
     cout << "TRUE " << truePredIdxSet_->size() << endl;
-    for (int i = 0; i < truePredIdxSet_->size(); i++)
+    for (unsigned i = 0; i < truePredIdxSet_->size(); i++)
     {
       LongLongHashSet hs = (*truePredIdxSet_)[i];
       cout << i << ": " << hs.size() << endl;
     }
     cout << "FALSE " << falsePredIdxSet_->size() << endl;
-    for (int i = 0; i < falsePredIdxSet_->size(); i++)
+    for (unsigned i = 0; i < falsePredIdxSet_->size(); i++)
     {
       LongLongHashSet hs = (*falsePredIdxSet_)[i];
       cout << i << ": " << hs.size() << endl;
@@ -399,21 +399,21 @@ class Database
       // If changing lazy flag, our lazy index sets become invalid
     if (activePredIdxSet_)
     {
-      for (int i = 0; i < activePredIdxSet_->size(); i++)
+      for (unsigned i = 0; i < activePredIdxSet_->size(); i++)
         (*activePredIdxSet_)[i].clear();
       delete activePredIdxSet_;
       activePredIdxSet_ = NULL;
     }
     if (evidencePredIdxSet_)
     {
-      for (int i = 0; i < evidencePredIdxSet_->size(); i++)
+      for (unsigned i = 0; i < evidencePredIdxSet_->size(); i++)
         (*evidencePredIdxSet_)[i].clear();
       delete evidencePredIdxSet_;
       evidencePredIdxSet_ = NULL;
     }
     if (deactivatedPredIdxSet_)
     {
-      for (int i = 0; i < deactivatedPredIdxSet_->size(); i++)
+      for (unsigned i = 0; i < deactivatedPredIdxSet_->size(); i++)
         (*deactivatedPredIdxSet_)[i].clear();
       delete deactivatedPredIdxSet_;
       deactivatedPredIdxSet_ = NULL;
@@ -468,7 +468,7 @@ class Database
         = (pred->getTerm(0)->getId()==pred->getTerm(1)->getId()) ? TRUE : FALSE;
 
         //if pred is in oppEqGndPreds_, return opposite of actual value
-      for (int i = 0; i < oppEqGndPreds_.size(); i++)
+      for (unsigned i = 0; i < oppEqGndPreds_.size(); i++)
         if (ppred->same(oppEqGndPreds_[i]))
         {
           if (actual == TRUE)
@@ -686,7 +686,7 @@ class Database
   void resetActiveStatus()
   {
   	assert(lazyFlag_);
-    for (int i = 0; i < activePredIdxSet_->size(); i++)
+    for (unsigned i = 0; i < activePredIdxSet_->size(); i++)
       (*activePredIdxSet_)[i].clear();
   }
 
@@ -737,7 +737,7 @@ class Database
   void resetDeactivatedStatus()
   {
   	assert(lazyFlag_);
-    for (int i = 0; i < deactivatedPredIdxSet_->size(); i++)
+    for (unsigned i = 0; i < deactivatedPredIdxSet_->size(); i++)
       (*deactivatedPredIdxSet_)[i].clear();
   }
 
@@ -788,7 +788,7 @@ class Database
                           Array<TruthValue>* const & prevValues)
   {
     if (prevValues) prevValues->clear();
-    for (int i = 0; i < gndPreds->size(); i++)
+    for (unsigned i = 0; i < gndPreds->size(); i++)
     {
       TruthValue prev = setValue((*gndPreds)[i], UNKNOWN);
       if (prevValues) prevValues->append(prev);
@@ -799,7 +799,7 @@ class Database
                           Array<TruthValue>* const & prevValues)
   {
     if (prevValues) prevValues->clear();
-    for (int i = 0; i < gndPreds->size(); i++)
+    for (unsigned i = 0; i < gndPreds->size(); i++)
     {
       TruthValue prev = setValue((*gndPreds)[i], UNKNOWN);
       if (prevValues) prevValues->append(prev);
@@ -812,7 +812,7 @@ class Database
   {
     assert(values);
     assert(values->size() == gndPreds->size());
-    for (int i = 0; i < gndPreds->size(); i++)
+    for (unsigned i = 0; i < gndPreds->size(); i++)
       setValue((*gndPreds)[i], (*values)[i]);
   }
 
@@ -821,7 +821,7 @@ class Database
   {
     assert(values);
     assert(values->size() == gndPreds->size());
-    for (int i = 0; i < gndPreds->size(); i++)
+    for (unsigned i = 0; i < gndPreds->size(); i++)
       setValue((*gndPreds)[i], (*values)[i]);
   }
 
@@ -832,7 +832,7 @@ class Database
                        const TruthValue& newVal, 
                        Array<TruthValue>* const & gndPredValues) 
   {
-    for (int i = 0; i < gndPreds->size(); i++) 
+    for (unsigned i = 0; i < gndPreds->size(); i++) 
     {
 	  TruthValue val = getValue((*gndPreds)[i]);
 	  gndPredValues->append(val);
@@ -956,7 +956,7 @@ class Database
     {
       int nc = domain_->getNumConstantsByType(t->getTermTypeAsInt(0));
       int minus = 0;
-      for (int i = 0; i < oppEqGndPreds_.size(); i++)
+      for (unsigned i = 0; i < oppEqGndPreds_.size(); i++)
       {
         Predicate* pred = oppEqGndPreds_[i];
         if (pred->getId() == predId &&
@@ -979,7 +979,7 @@ class Database
     {
       int nc = domain_->getNumConstantsByType(t->getTermTypeAsInt(0));
       int minus = 0;
-      for (int i = 0; i < oppEqGndPreds_.size(); i++)
+      for (unsigned i = 0; i < oppEqGndPreds_.size(); i++)
       {
         Predicate* pred = oppEqGndPreds_[i];
         if (pred->getId() == predId &&
@@ -1057,7 +1057,7 @@ class Database
                          bool const & ignoreActivePreds,
                          bool const & trueGndings)
   {
-    int predId = pred->getId();
+    unsigned predId = pred->getId();
       // All terms are grounded: just return itself
     if (pred->isGrounded())
     {
@@ -1096,8 +1096,8 @@ class Database
             // Generate all groundings and omit true ones
           Array<Predicate*> predArr;
           Predicate::createAllGroundings(predId, domain_, predArr);
-          int numPreds = predArr.size();
-          for (int i = 0; i < numPreds; i++)
+          unsigned numPreds = predArr.size();
+          for (unsigned i = 0; i < numPreds; i++)
           {
             Predicate* newPred = predArr[i];
               // Check if in true groundings
@@ -1254,7 +1254,7 @@ class Database
       int numTermTypes = termTypes->size(); 
       matArr->growToSize(numTermTypes);
       unsigned long long curMult = 1;
-      for (int j = numTermTypes - 1; j >= 0; j--)
+      for (unsigned j = numTermTypes - 1; j >= 0; j--)
       {
         int typeId = (*termTypes)[j];
         (*matArr)[j] = MultAndType(curMult, typeId);
@@ -1435,10 +1435,10 @@ class Database
 //      p->setTermToConstant(i, constId);
 //    }
 //    delete auxIdx;
-    for (int i = 0; i < predTemplate->getNumTerms(); i++)
+    for (unsigned i = 0; i < predTemplate->getNumTerms(); i++)
     {
       unsigned long long aux = 0;
-      for (int j = 0; j < i; j++)
+      for (unsigned j = 0; j < i; j++)
       {
         aux += (*auxIdx)[j] * ((*multAndTypes)[j].first);
       }
@@ -1469,7 +1469,7 @@ class Database
                                hash_map<int,int>& oldToNewConstIds,
                           const Array<Array<MultAndType>*> & currtermMultByPred)
   {
-    for (int i = 0; i < predIdxSets->size(); i++)
+    for (unsigned i = 0; i < predIdxSets->size(); i++)
     {
       LongLongHashSet newHashSet;
       LongLongHashSet& predIdxSet = (*predIdxSets)[i];
@@ -1509,7 +1509,7 @@ class Database
                                hash_map<int,int>& oldToNewConstIds,
                           const Array<Array<MultAndType>*> & currtermMultByPred)
   {
-    for (int i = 0; i < predIdxMaps->size(); i++)
+    for (unsigned i = 0; i < predIdxMaps->size(); i++)
     {
       LongLongHashMap newHashMap;
       LongLongHashMap& predIdxMap = (*predIdxMaps)[i];
@@ -1689,7 +1689,7 @@ class Database
       TruthValue opposite = (actual==TRUE) ? FALSE : TRUE;
 
         //if pred is in oppEqGndPreds_, return opposite of actual value
-      for (int i = 0; i < oppEqGndPreds_.size(); i++)
+      for (unsigned i = 0; i < oppEqGndPreds_.size(); i++)
         if (ppred->same(oppEqGndPreds_[i]))
         {
           if (flip || ttv == actual)
@@ -1926,7 +1926,7 @@ class Database
   {
       // Assumption is: Predicate is grounded
     assert(((Predicate*)pred)->isGrounded());
-    int predId = pred->getId();
+    unsigned predId = pred->getId();
     assert(predId < trueEvIndex_->size());
     for (int term = 0; term < pred->getNumTerms(); term++)
     {
@@ -1974,7 +1974,7 @@ class Database
   void addToInvertedIndex(const GroundPredicate* const & pred,
                           const unsigned long long& predIdx, IndexType idxType)
   {
-    int predId = pred->getId();
+    unsigned predId = pred->getId();
     assert(predId < trueEvIndex_->size());
     for (unsigned int term = 0; term < pred->getNumTerms(); term++)
     {
@@ -2025,7 +2025,7 @@ class Database
   {
       // Assumption is: Predicate is grounded
     assert(((Predicate*)pred)->isGrounded());
-    int predId = pred->getId();
+    unsigned predId = pred->getId();
     assert(predId < trueEvIndex_->size());
     for (int term = 0; term < pred->getNumTerms(); term++)
     {
@@ -2064,7 +2064,7 @@ class Database
                                const unsigned long long& predIdx,
                                IndexType idxType)
   {
-    int predId = pred->getId();
+    unsigned predId = pred->getId();
     assert(predId < trueEvIndex_->size());
     for (unsigned int term = 0; term < pred->getNumTerms(); term++)
     {

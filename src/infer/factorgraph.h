@@ -749,7 +749,7 @@ class FactorGraph
     int itr = 1;
     cout<<"*************************************************"<<endl<<endl;
     setuptime = 0;
-    bptime = 0;
+    bptime = 0; (void) bptime;
 
       //create the initial set of superpreds - one superpredicate for each
       //first order predicate

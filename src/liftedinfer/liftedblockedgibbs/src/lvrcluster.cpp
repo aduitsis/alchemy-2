@@ -661,7 +661,7 @@ void LVRCluster::doReduceClauseWithSelfJoinsByEvidence(int elementIndex,WClause*
 
 void LVRCluster::doReduceCNFByEvidence(int elementIndex,vector<WClause*>& clauses,vector<WClause*>& groundedClauses)
 {
-	int cnt = 0;
+  //int cnt = 0;
 	for(unsigned int i=0;i<clauses.size();i++)
 	{
 		int atomInd = -1;

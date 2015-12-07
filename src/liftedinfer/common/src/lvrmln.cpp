@@ -558,7 +558,7 @@ void LvrMLN::doPreprocessEvidence(map<int,int> evidenceHashMap)
 	for(unsigned int i=0;i<clauses.size();i++)
 	{
 		vector<int> clauseHashCodes;
-		int removed=0;
+		//int removed=0;
 		for(int j=0;j<clauses[i]->atoms.size();j++)
 		{
 			if(!clauses[i]->atoms[j]->isConstant())

@@ -107,13 +107,13 @@ class PowerSet
 
   ~PowerSet()
   {
-    for (int i = 0; i < setSizeArr_->size(); i++)
+    for (unsigned i = 0; i < setSizeArr_->size(); i++)
     {
       if ((*setSizeArr_)[i] == NULL) continue;
-      for (int j = 0; j < (*setSizeArr_)[i]->size(); j++)
+      for (unsigned j = 0; j < (*setSizeArr_)[i]->size(); j++)
       {
         if ((*(*setSizeArr_)[i])[j] == NULL) continue;
-        for (int k = 0; k < (*(*setSizeArr_)[i])[j]->size(); k++)
+        for (unsigned k = 0; k < (*(*setSizeArr_)[i])[j]->size(); k++)
           delete (*(*(*setSizeArr_)[i])[j])[k];
         delete (*(*setSizeArr_)[i])[j];
       }
@@ -123,9 +123,10 @@ class PowerSet
   }
 
 
-  void create(const int& maxSize)
+  void create(unsigned maxSize)
   {
-    int curMaxSize = setSizeArr_->size()-1;
+    assert (setSizeArr_->size() > 0);
+    unsigned curMaxSize = setSizeArr_->size()-1;
     //commented out because user can choose not to delete the power set
     //assert(curMaxSize <= MAX_SIZE_TO_STORE);
     if (maxSize <= curMaxSize) return;
@@ -135,7 +136,7 @@ class PowerSet
     if (curMaxSize < 0) (*setSizeArr_)[1] = new Array<Array<Array<int>*>*>;
     Array<Array<Array<int>*>*>* unitCombs = (*setSizeArr_)[1];
     unitCombs->growToSize(maxSize,NULL);
-    for (int i = (curMaxSize<0)?0:curMaxSize; i < maxSize; i++)
+    for (unsigned i = (curMaxSize<0)?0:curMaxSize; i < maxSize; i++)
     {
       Array<Array<int>*>* unitComb = new Array<Array<int>*>;
       unitComb->append(new Array<int>);
@@ -147,24 +148,24 @@ class PowerSet
     if (curMaxSize < 0) curMaxSize = 1;
 
       // create combinations with more than one item
-    for (int s = 2; s <= maxSize; s++)
+    for (unsigned s = 2; s <= maxSize; s++)
     {
       int remainingSize = s-1;
       Array<Array<Array<int>*>*>* combs = (*setSizeArr_)[remainingSize];
 
         // for each index that can be appended to an existing combination
-      for (int i = curMaxSize; i < maxSize; i++)
+      for (unsigned i = curMaxSize; i < maxSize; i++)
       {
-        for (int j = 0; j < i; j++)
+        for (unsigned j = 0; j < i; j++)
         {
           Array<Array<int>*>* combsEndInJ = (*combs)[j];
             // if there are no combinations ending in j
           if (combsEndInJ == NULL) continue;
-          for (int k = 0; k < combsEndInJ->size(); k++)
+          for (unsigned k = 0; k < combsEndInJ->size(); k++)
           {
             Array<int>* comb = (*combsEndInJ)[k];
-            assert (comb->lastItem() == j);
-            assert (comb->lastItem() < i);
+            assert (comb->lastItem() == (int) j);
+            assert (comb->lastItem() < (int) i);
             Array<int>* newComb = new Array<int>(*comb);
             newComb->append(i);
             newComb->compress();
@@ -188,16 +189,16 @@ class PowerSet
   {
     if (setSizeArr_->size()-1 <= MAX_SIZE_TO_STORE) return;
 
-    for (int i = 0; i < setSizeArr_->size(); i++)
+    for (unsigned i = 0; i < setSizeArr_->size(); i++)
     {
       if ((*setSizeArr_)[i] == NULL) continue;
 
       if (i <= MAX_SIZE_TO_STORE)
       {
-        for (int j = MAX_SIZE_TO_STORE; j < (*setSizeArr_)[i]->size(); j++)
+        for (unsigned j = MAX_SIZE_TO_STORE; j < (*setSizeArr_)[i]->size(); j++)
         {
           if ((*(*setSizeArr_)[i])[j] == NULL) continue;
-          for (int k = 0; k < (*(*setSizeArr_)[i])[j]->size(); k++)
+          for (unsigned k = 0; k < (*(*setSizeArr_)[i])[j]->size(); k++)
             delete (*(*(*setSizeArr_)[i])[j])[k];
           delete (*(*setSizeArr_)[i])[j];
         }
@@ -205,10 +206,10 @@ class PowerSet
       }
       else
       {
-        for (int j = 0; j < (*setSizeArr_)[i]->size(); j++)
+        for (unsigned j = 0; j < (*setSizeArr_)[i]->size(); j++)
         {
           if ((*(*setSizeArr_)[i])[j] == NULL) continue;
-          for (int k = 0; k < (*(*setSizeArr_)[i])[j]->size(); k++)
+          for (unsigned k = 0; k < (*(*setSizeArr_)[i])[j]->size(); k++)
             delete (*(*(*setSizeArr_)[i])[j])[k];
           delete (*(*setSizeArr_)[i])[j];
         }
@@ -219,7 +220,7 @@ class PowerSet
   }
 
 
-  void prepareAccess(const int& tempMaxSize, PowerSetInstanceVars& instVars,
+  void prepareAccess(unsigned tempMaxSize, PowerSetInstanceVars& instVars,
                      const bool& smallSizeFirst=true)
   {
     if (tempMaxSize > setSizeArr_->size()-1)
@@ -245,7 +246,7 @@ class PowerSet
     int& combIdx = instVars.combIdx;
     bool& smallSizeFirst = instVars.smallSizeFirst;
 
-    if (++combIdx >= (*(*setSizeArr_)[sizeIdx])[lastNumIdx]->size())
+    if ((unsigned) ++combIdx >= (*(*setSizeArr_)[sizeIdx])[lastNumIdx]->size())
     {
       combIdx = 0;
       ++lastNumIdx;
@@ -288,17 +289,17 @@ class PowerSet
   ostream& print(ostream& out) const
   {
     int n = 0;
-    for (int i = 0; i < setSizeArr_->size(); i++)
+    for (unsigned i = 0; i < setSizeArr_->size(); i++)
     {
       if ((*setSizeArr_)[i] == NULL) continue;
-      for (int j = 0; j < (*setSizeArr_)[i]->size(); j++)
+      for (unsigned j = 0; j < (*setSizeArr_)[i]->size(); j++)
       {
         if ((*(*setSizeArr_)[i])[j] != NULL) 
         {
-          for (int k = 0; k < (*(*setSizeArr_)[i])[j]->size(); k++)
+          for (unsigned k = 0; k < (*(*setSizeArr_)[i])[j]->size(); k++)
           {
             cout << n++ << ": ";
-            for (int l = 0; l < (*(*(*setSizeArr_)[i])[j])[k]->size(); l++)
+            for (unsigned l = 0; l < (*(*(*setSizeArr_)[i])[j])[k]->size(); l++)
               cout << (*(*(*(*setSizeArr_)[i])[j])[k])[l] << " ";
             cout << endl;
           }

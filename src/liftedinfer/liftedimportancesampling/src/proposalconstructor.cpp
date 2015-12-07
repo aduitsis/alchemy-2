@@ -145,7 +145,7 @@ void LProposalConstructor::constructProposal(vector<WClause*>& CNF,vector<Atom*>
 	}
 	//see if atom has isolated terms
 	vector<bool> isolatedTerms;
-	bool isIsolated = LRulesUtil::computeIsolatedTerms(selectedAtom,CNF,isolatedTerms);
+	bool isIsolated = LRulesUtil::computeIsolatedTerms(selectedAtom,CNF,isolatedTerms); (void) isIsolated;
 	lpd->insertElement(selectedAtom,parents,isolatedTerms);
 	potentialParents.push_back(selectedAtom);
 	//remove atom from all clauses
@@ -221,7 +221,7 @@ void LProposalConstructor::constructProposalRB(vector<WClause*>& CNF,vector<Atom
 	}
 	//see if atom has isolated terms
 	vector<bool> isolatedTerms;
-	bool isIsolated = LRulesUtil::computeIsolatedTerms(selectedAtom,CNF,isolatedTerms);
+	bool isIsolated = LRulesUtil::computeIsolatedTerms(selectedAtom,CNF,isolatedTerms); (void) isIsolated;
 	lpd->insertElement(selectedAtom,parents,isolatedTerms);
 	potentialParents.push_back(selectedAtom);
 	//remove atom from all clauses
@@ -408,7 +408,7 @@ void LProposalConstructor::constructProposalV1(vector<WClause*>& CNF,vector<Atom
 	}
 	//see if atom has isolated terms
 	vector<bool> isolatedTerms;
-	bool isIsolated = LRulesUtil::computeIsolatedTerms(selectedAtom,CNF,isolatedTerms);
+	bool isIsolated = LRulesUtil::computeIsolatedTerms(selectedAtom,CNF,isolatedTerms); (void) isIsolated;
 	lpd->insertElement(selectedAtom,parents,isolatedTerms);
 	potentialParents.push_back(selectedAtom);
 	lpg->propagateNormalizedCNF(CNF,selectedAtom,isolatedTerms);
@@ -467,7 +467,7 @@ void LProposalConstructor::startConstruction(LvrParams* params)
 void LProposalConstructor::startMARInference(LvrParams* params)
 {
 	//set defaults
-	int printInterval = PRINTRESULTSINTERVAL;
+	//int printInterval = PRINTRESULTSINTERVAL;
 	if(params->maxSteps <= 0)
 	{
 		if(params->isWeightLearning)
@@ -494,7 +494,7 @@ void LProposalConstructor::startMARInference(LvrParams* params)
 void LProposalConstructor::startPartitionFunction(LvrParams* params)
 {
 	//set defaults
-	int printInterval = PRINTRESULTSINTERVAL;
+	//int printInterval = PRINTRESULTSINTERVAL;
 	if(params->maxSteps <= 0)
 	{
 		params->maxSteps = MAXSTEPSINFER;

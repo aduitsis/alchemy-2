@@ -77,8 +77,8 @@ struct TrueFalseGndings
   TrueFalseGndings() {}
   ~TrueFalseGndings() 
   {
-    for (int i = 0; i < trueGndings.size(); i++) delete [] trueGndings[i];
-    for (int i = 0; i < falseGndings.size(); i++) delete [] falseGndings[i];
+    for (unsigned i = 0; i < trueGndings.size(); i++) delete [] trueGndings[i];
+    for (unsigned i = 0; i < falseGndings.size(); i++) delete [] falseGndings[i];
   }
 
   Array<int*> trueGndings; 
@@ -103,7 +103,7 @@ class TrueFalseGroundingsStore
 
   ~TrueFalseGroundingsStore() 
   {
-    for (int i = 0; i < predToGndingsMaps_.size(); i++)
+    for (unsigned i = 0; i < predToGndingsMaps_.size(); i++)
     {
       PredToGndingsMap* ptgMap = predToGndingsMaps_[i];
       if (ptgMap == NULL) continue;
@@ -210,7 +210,7 @@ class TrueFalseGroundingsStore
     Predicate* tmpPred = new Predicate(*pred);
     Array<int*> constArrays;
     tmpPred->createAllGroundings(domain_, constArrays);
-    for (int i = 0; i < constArrays.size(); i++)
+    for (unsigned i = 0; i < constArrays.size(); i++)
     {
       int* constIds = constArrays[i];
       for (int j = 0; j < tmpPred->getNumTerms(); j++)

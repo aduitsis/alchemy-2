@@ -3079,7 +3079,7 @@ class VariableState
         cout << endl;
       }
 
-      currTime = timer.time();
+      currTime = timer.time(); (void) currTime;
 
       const double* parentWtPtr = NULL;
       if (!fclause->isHardClause()) parentWtPtr = fclause->getWtPtr();

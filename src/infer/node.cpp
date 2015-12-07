@@ -145,7 +145,7 @@ void Node::sendMessage()
   {
     link = (*links_)[lindex];
     factor = link->getFactor();
-    cnt = link->getCount();
+    cnt = link->getCount(); (void) cnt;
       //subtract the msg recieved from this factor node
     msgs = (*msgsArr_)[lindex];
     for (int i = 0; i < 2; i++)
@@ -172,7 +172,7 @@ void Node::sendAuxMessage()
   {
     link = (*auxLinks_)[lindex];
     factor = link->getFactor();
-    cnt = link->getCount();
+    cnt = link->getCount(); (void) cnt;
     for (int i = 0; i < 2; i++)
     {
       outMsgs[i] = msgProds_[i];

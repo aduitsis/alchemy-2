@@ -188,7 +188,7 @@ void LResolver::reduceDomains(WClause* clause, Atom* atom, vector<int> truthValu
 	{
 		WClause* nClause = LvrMLN::create_new_clause(clause);
 		//simply remove the matching atoms
-		int rmcnt=0;
+		//int rmcnt=0;
 		for(unsigned int i=0;i<nClause->atoms.size();i++)
 		{
 			if(nClause->atoms[i]->symbol->id == atom->symbol->id)

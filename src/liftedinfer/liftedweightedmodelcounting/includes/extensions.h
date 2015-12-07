@@ -20,8 +20,8 @@ struct LExtensions
 	}
 	~LExtensions();
 private:
-	LCache* cache;
 	LvrMLN& mln;
+  	LCache* cache;
 	LogDouble getUnitClauseWeightWMPTP(WClause* clause);
 };
 #endif

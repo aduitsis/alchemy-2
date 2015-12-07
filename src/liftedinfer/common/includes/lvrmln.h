@@ -22,7 +22,7 @@ struct LvrTerm
 	int currentSampledPos;
 	LvrTerm():origDomainSize(-1),currentSampledPos(0){}
 	LvrTerm(int type_, vector<int>& domain_): type(type_),domain(domain_),origDomainSize(-1),currentSampledPos(0){}
-	LvrTerm(int type_,int value):type(type),domain(vector<int>(1)),origDomainSize(-1),currentSampledPos(0){ domain[0]=value;}
+	LvrTerm(int type_,int value):type(type_),domain(vector<int>(1)),origDomainSize(-1),currentSampledPos(0){ domain[0]=value;}
 	LvrTerm(const LvrTerm& term)
 	{
 		type = term.type;
@@ -183,8 +183,8 @@ struct Formula
 {
 	int MLNClauseStartIndex;
 	int MLNClauseEndIndex;
+  	LogDouble weight;
 	bool isEvidence;
-	LogDouble weight;
 	Formula(int MLNClauseStartIndex_,int MLNClauseEndIndex_,LogDouble weight_, bool isEvidence_ = false):MLNClauseStartIndex(MLNClauseStartIndex_),
 		MLNClauseEndIndex(MLNClauseEndIndex_),weight(weight_),isEvidence(isEvidence_){}
 };
@@ -258,7 +258,7 @@ struct LvrMLN
 	void setMLNPoperties()
 	{
 		//max degree of LvrMLN
-		int maxterms = 0;
+		unsigned maxterms = 0;
 		for(unsigned int i=0;i<symbols.size();i++)
 		{
 			if(symbols[i]->variable_types.size() > maxterms)

@@ -161,10 +161,10 @@ struct AuxClauseData
   {
     if (cache)
     {
-      for (int i = 0; i < cache->size(); i++) //for each domain
+      for (unsigned i = 0; i < cache->size(); i++) //for each domain
       {
         Array<Array<CacheCount*>*>* aacc = (*cache)[i];
-        for (int j = 0; j < aacc->size(); j++) //for each predicate
+        for (unsigned j = 0; j < aacc->size(); j++) //for each predicate
         {
           Array<CacheCount*>* ccArr = (*aacc)[j];
           if (ccArr == NULL) continue;
@@ -184,10 +184,10 @@ struct AuxClauseData
     if (constTermPtrs) constTermPtrs->compress();
     if (cache)
     {
-      for (int i = 0; i < cache->size(); i++) //for each domain
+      for (unsigned i = 0; i < cache->size(); i++) //for each domain
       {
         Array<Array<CacheCount*>*>* aacc = (*cache)[i];
-        for (int j = 0; j < aacc->size(); j++) //for each predicate
+        for (unsigned j = 0; j < aacc->size(); j++) //for each predicate
         {
           Array<CacheCount*>* ccArr = (*aacc)[j];
           if (ccArr == NULL) continue;
@@ -206,8 +206,8 @@ struct AuxClauseData
     double sz = fixedSizeB_;
     if (cache)
     {
-      for (int i = 0; i < cache->size(); i++)
-        for (int j = 0; j < (*cache)[i]->size(); j++)
+      for (unsigned i = 0; i < cache->size(); i++)
+        for (unsigned j = 0; j < (*cache)[i]->size(); j++)
         {
           if((*(*cache)[i])[j] == NULL) continue;
           sz += (*(*cache)[i])[j]->size() * (sizeof(CacheCount) +

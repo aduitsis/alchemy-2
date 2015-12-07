@@ -627,9 +627,9 @@ private :
 			isave[19] = isave[18] + m;
 			isave[20] = isave[19] + m;
 		}
-		l1   = isave[1];
-		l2   = isave[2];
-		l3   = isave[3];
+		l1   = isave[1]; (void) l1;
+		l2   = isave[2]; (void) l2;
+		l3   = isave[3]; (void) l3;
 		lws  = isave[4];
 		lwy  = isave[5];
 		lsy  = isave[6];

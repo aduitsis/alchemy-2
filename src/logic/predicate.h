@@ -107,7 +107,7 @@ class Predicate
   
   ~Predicate()
   {
-    for (int i = 0; i < terms_->size(); i++)  delete (*terms_)[i];
+    for (unsigned i = 0; i < terms_->size(); i++)  delete (*terms_)[i];
     delete terms_;
     if (intArrRep_) delete intArrRep_;
   }
@@ -117,7 +117,7 @@ class Predicate
   {
     double sizeMB = (fixedSizeB_ + intArrRep_->size()*sizeof(int) +
                      terms_->size()*sizeof(Term*))/1000000.0;
-    for (int i = 0; i < terms_->size(); i++) sizeMB += (*terms_)[i]->sizeMB();
+    for (unsigned i = 0; i < terms_->size(); i++) sizeMB += (*terms_)[i]->sizeMB();
     return sizeMB;
   }
 
@@ -128,7 +128,7 @@ class Predicate
 
   void compress() 
   { 
-    for (int i = 0; i < terms_->size(); i++)  (*terms_)[i]->compress();
+    for (unsigned i = 0; i < terms_->size(); i++)  (*terms_)[i]->compress();
     terms_->compress(); 
     intArrRep_->compress(); 
   }
@@ -152,15 +152,17 @@ class Predicate
   {
     Array<int> varIdToNewVarId;
     int newVarId = 0;
-    for (int i = 0; i < terms_->size(); i++)
+    for (unsigned i = 0; i < terms_->size(); i++)
     {
       if ((*terms_)[i]->getType() == Term::VARIABLE)
       {
         int id = -((*terms_)[i]->getId());
         assert(id > 0);
-        if (id >= varIdToNewVarId.size()) varIdToNewVarId.growToSize(id+1,0);
+        if ((unsigned) id >= varIdToNewVarId.size())
+          varIdToNewVarId.growToSize(id+1,0);
           //if a new var id has not been assigned to old var id
-        if (varIdToNewVarId[id] >= 0) varIdToNewVarId[id] = --newVarId;
+        if (varIdToNewVarId[id] >= 0)
+          varIdToNewVarId[id] = --newVarId;
         (*terms_)[i]->setId(varIdToNewVarId[id]);
       }
       assert((*terms_)[i]->getType() != Term::FUNCTION);
@@ -263,7 +265,7 @@ class Predicate
   const Term* getTerm(const int& idx) const { return (*terms_)[idx]; }
 
 
-  void setTermToConstant(const int& termNum, const int& constId)
+  void setTermToConstant(unsigned termNum, const int& constId)
   {
     assert(termNum < template_->getNumTerms());
     assert(constId >= 0);
@@ -277,7 +279,7 @@ class Predicate
   bool containsConstant(const int& constId) const
   {
     assert(constId >= 0);
-    for (int i = 0; i < terms_->size(); i++)
+    for (unsigned i = 0; i < terms_->size(); i++)
     {
       Term* t = (*terms_)[i];
       if (t->getType() == Term::CONSTANT && t->getId() == constId) return true;
@@ -292,7 +294,7 @@ class Predicate
    */
   bool containsConstants() const
   {
-    for (int i = 0; i < terms_->size(); i++)
+    for (unsigned i = 0; i < terms_->size(); i++)
     {
       Term* t = (*terms_)[i];
       if (t->getType() == Term::CONSTANT) return true;
@@ -314,14 +316,14 @@ class Predicate
     // Caller should not delete the returned const char* nor modify its
     // contents. Returns NULL if idx is larger than the possible number of 
     // terms
-  const char* getTermTypeAsStr(const int& idx) const 
+  const char* getTermTypeAsStr(unsigned idx) const 
   {
     if (idx >= template_->getNumTerms()) return NULL;
     return template_->getTermTypeAsStr(idx); 
   }
 
     // Returns -1 if idx is larger than the possible number of terms
-  int getTermTypeAsInt(const int& idx) const 
+  int getTermTypeAsInt(unsigned idx) const 
   {
     if (idx >= template_->getNumTerms()) return -1;
     return template_->getTermTypeAsInt(idx); 
@@ -339,7 +341,7 @@ class Predicate
   {
     Array<int> vars;
     allTermsAreDiffVars_ = true;
-    for (int i = 0; i < terms_->size(); i++)
+    for (unsigned i = 0; i < terms_->size(); i++)
     {
       if ((*terms_)[i]->getType() == Term::VARIABLE)
       {
@@ -383,7 +385,7 @@ class Predicate
     
     int varGndings[MAX_VAR];
     memset(varGndings, -1, MAX_VAR*sizeof(int));
-    for (int i = 0; i < terms_->size(); i++) 
+    for (unsigned i = 0; i < terms_->size(); i++) 
     {
       int termType = (*terms_)[i]->getType();
       
@@ -466,14 +468,15 @@ class Predicate
     if (varsTypeIdArr == NULL) varsTypeIdArr = new Array<VarsTypeId*>;
 
       //for each variable of the predicate
-    for (int j = 0; j < terms_->size(); j++)
+    for (unsigned j = 0; j < terms_->size(); j++)
     {
       Term* t = (*terms_)[j];
       if (t->getType() == Term::VARIABLE)
       {
         int id = -(t->getId());
         assert(id > 0);
-        if (id >= varsTypeIdArr->size()) varsTypeIdArr->growToSize(id+1, NULL);
+        if ((unsigned) id >= varsTypeIdArr->size())
+          varsTypeIdArr->growToSize(id+1, NULL);
         VarsTypeId*& vti = (*varsTypeIdArr)[id];
         if (vti == NULL) 
         {
@@ -491,7 +494,7 @@ class Predicate
 
   void deleteVarsTypeIdArr(Array<VarsTypeId*>*& varsTypeIdArr)
   {
-    for (int i = 0; i < varsTypeIdArr->size(); i++)
+    for (unsigned i = 0; i < varsTypeIdArr->size(); i++)
       if ((*varsTypeIdArr)[i]) delete (*varsTypeIdArr)[i];
     delete varsTypeIdArr;
     varsTypeIdArr = NULL; 
@@ -536,7 +539,7 @@ class Predicate
 
     if (!sense_) out << "!";
     out << template_->getId() << "(";
-    for (int i = 0; i < terms_->size(); i++)
+    for (unsigned i = 0; i < terms_->size(); i++)
     {
       (*terms_)[i]->printAsInt(out); 
       out << ((i!=terms_->size()-1)?",":")");
@@ -577,7 +580,7 @@ class Predicate
 
     terms_ = new Array<Term*>;
     Array<Term*>* tterms = p.terms_;
-    for (int i = 0; i < tterms->size(); i++)
+    for (unsigned i = 0; i < tterms->size(); i++)
     {
       Term* t = (*tterms)[i];
       terms_->append(new Term(*t, (void*)this, true));      
@@ -604,7 +607,7 @@ class Predicate
 
   bool noDirtyTerms()
   {
-    for (int i = 0; i < terms_->size(); i++)
+    for (unsigned i = 0; i < terms_->size(); i++)
       if ((*terms_)[i]->isDirty()) return false;
     return true;
   }
@@ -708,7 +711,7 @@ class Predicate
 	{
 	  if (!sense_) out << "!";
       out << template_->getId() << "(";
-      for (int i = 0; i < terms_->size(); i++)
+      for (unsigned i = 0; i < terms_->size(); i++)
       {
       	(*terms_)[i]->printAsInt(out); 
         out << ((i!=terms_->size()-1)?",":")");
@@ -754,7 +757,7 @@ class Predicate
 	{
       if (!sense_) out << "!";
       out << PredicateTemplate::SUBSTR_NAME << "(";
-      for (int i = 0; i < terms_->size(); i++)
+      for (unsigned i = 0; i < terms_->size(); i++)
       {
         (*terms_)[i]->print(out, domain); 
         out << ((i!=terms_->size()-1)?",":")");
@@ -801,7 +804,7 @@ class Predicate
 	{
       if (!sense_) out << "!";
       out << PredicateTemplate::SUBSTR_NAME << "(";
-      for (int i = 0; i < terms_->size(); i++)
+      for (unsigned i = 0; i < terms_->size(); i++)
       {
         (*terms_)[i]->printWithStrVar(out, domain); 
         out << ((i!=terms_->size()-1)?",":")");

@@ -78,9 +78,9 @@ class GroundPreds
 
   ~GroundPreds()
   {
-    for (int i=0; i<trueGndPreds_->size();i++)    delete (*trueGndPreds_)[i];
-    for (int i=0; i<falseGndPreds_->size();i++)   delete (*falseGndPreds_)[i];
-    for (int i=0; i<unknownGndPreds_->size();i++) delete (*unknownGndPreds_)[i];
+    for (unsigned i=0; i<trueGndPreds_->size();i++)    delete (*trueGndPreds_)[i];
+    for (unsigned i=0; i<falseGndPreds_->size();i++)   delete (*falseGndPreds_)[i];
+    for (unsigned i=0; i<unknownGndPreds_->size();i++) delete (*unknownGndPreds_)[i];
     delete trueGndPreds_;
     delete falseGndPreds_;
     delete unknownGndPreds_;

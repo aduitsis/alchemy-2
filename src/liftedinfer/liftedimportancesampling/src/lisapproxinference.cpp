@@ -190,11 +190,11 @@ LogDouble LISApproxInference::doLvApproxPartitionInformedV1(vector<WClause*>& CN
 	}
 	Atom* atom = LvrMLN::create_new_atom(tmpAtom);
 	//sample according to mode
-	LProposalDistributionElement* lpe = lpe = distribution->findElement(atom);
+	LProposalDistributionElement* lpe = distribution->findElement(atom);
 	//use Isolated terms rule
 	vector<bool> isolatedTerms;
 	bool isIsolated = LRulesUtil::computeIsolatedTerms(atom,CNF,isolatedTerms);
-	double binCoeff = 1;
+	//double binCoeff = 1;
 	LogDouble probOfSample(1,false);
 	LogDouble sampleWeight(1,false);
 	vector<int> sampledValues;
@@ -427,7 +427,7 @@ LogDouble LISApproxInference::doLvApproxPartitionInformed(vector<WClause*>& CNF)
 		else if(isIsolated)
 		{	
 			//use Isolated terms rule
-			double binCoeff = 1;
+			//double binCoeff = 1;
 			LogDouble probOfSample(1,false);
 			LogDouble sampleWeight(1,false);
 			vector<int> sampledValues;
@@ -647,7 +647,7 @@ LogDouble LISApproxInference::doLvApproxPartitionInformedRB(vector<WClause*>& CN
 		else if(isIsolated)
 		{	
 			//use Isolated terms rule
-			double binCoeff = 1;
+			//double binCoeff = 1;
 			LogDouble probOfSample(1,false);
 			LogDouble sampleWeight(1,false);
 			vector<int> sampledValues;
@@ -1090,7 +1090,7 @@ void LISApproxInference::estimateApproxMarginals(LvrParams* params,LProposalDist
 	cout<<"Time ="<<ctime(&start)<<endl;
 	LogDouble ZApprox;
 	int iterations = 0;
-	int printInterval = PRINTRESULTSINTERVAL;
+	//int printInterval = PRINTRESULTSINTERVAL;
 	setSamplingMode(params->samplingMode);
 	LogDouble totalWeight;
 	if(params->learningRate <=0 )

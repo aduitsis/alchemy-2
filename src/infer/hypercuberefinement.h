@@ -159,7 +159,7 @@ public:
 	   for(itr = subsetHCToRefinedHCs_->begin();
 		   itr != subsetHCToRefinedHCs_->end();
 		   itr++) {
-			subsetHyperCube = itr->first;
+			subsetHyperCube = itr->first; (void) subsetHyperCube;
             
 			/*
 			cout<<endl<<"*********************************"<<endl;
@@ -291,18 +291,18 @@ public:
 	  Array<HyperCube *> * refinedHyperCubes, *intersectingHyperCubes; 
       
 	  HyperCubeToHyperCubeHashArrayMap::iterator itr;
-	  int n=0;
+	  //int n=0;
 	  //cout<<"Total number of hypercubes to be processed for this Predicate = "<<baseHCToSubsetHCs_->size()<<endl;
 
 	  //while(true) {
 
-	  n = 0;
+	  //n = 0;
 	  for(itr = baseHCToSubsetHCs_->begin();
 		   itr != baseHCToSubsetHCs_->end();
 		   itr++) {
 		    //cout<<"Processing Base HyperCube "<<n++<<endl;
-		    baseHyperCube = itr->first;
-			subsetHyperCubes = itr->second;
+		    baseHyperCube = itr->first; (void) baseHyperCube;
+		    subsetHyperCubes = itr->second;
 			
 			/*
 			cout<<"for the base hypercube "<<endl;

@@ -92,7 +92,7 @@ class ConstDualMap
 
   ~ConstDualMap() 
   {
-    for (int i = 0; i < intToStrIntArr_->size(); i++)
+    for (unsigned i = 0; i < intToStrIntArr_->size(); i++)
       delete (*intToStrIntArr_)[i];
     delete intToStrIntArr_;
     delete strIntToIntMap_;
@@ -101,7 +101,7 @@ class ConstDualMap
 
     // Returns const char* corresponding to i or NULL if there is no such char*.
     // The returned const char* should not be deleted.
-  const char* getStr(const int& i)
+  const char* getStr(unsigned i)
   { 
     if (0 <= i && i < intToStrIntArr_->size())
       return (*intToStrIntArr_)[i]->str_;
@@ -111,7 +111,7 @@ class ConstDualMap
 
     // Returns the ints_ of StrInt corresponding to i; returns NULL if there is
     // no such StrInt. Should not be deleted by caller.
-  Array<int>* getInt2(const int& i)
+  Array<int>* getInt2(unsigned i)
   { 
     if (0 <= i && i < intToStrIntArr_->size())
       return (*intToStrIntArr_)[i]->ints_;
@@ -197,7 +197,7 @@ class ConstDualMap
   const Array<const char*>* getIntToStrArr() const  
   { 
     Array<const char*>* a = new Array<const char*>;
-    for (int i = 0; i < intToStrIntArr_->size(); i++)
+    for (unsigned i = 0; i < intToStrIntArr_->size(); i++)
       a->append((*intToStrIntArr_)[i]->str_);
     return a; 
   }

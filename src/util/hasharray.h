@@ -105,7 +105,7 @@ class HashArray
     numItems_ = x.numItems_;
     maxItems_ = numItems_;
     map_ = new hash_map<Type, int, HashFn, EqualFn>;
-    for (int i = 0; i < numItems_; i++)
+    for (unsigned i = 0; i < numItems_; i++)
       (*map_)[items_[i]] = i;
     assert(map_->size() == (unsigned int) numItems_);
   }
@@ -199,7 +199,7 @@ class HashArray
   {
     int origNumItems = numItems_;
     if(!growToSize(newSize)) return false;
-    for (int i = origNumItems; i < numItems_; i++)
+    for (unsigned i = origNumItems; i < numItems_; i++)
       items_[i] = fill;
     return true;
   }
@@ -216,7 +216,7 @@ class HashArray
     // items_ is not deleted,and maxItems_ stay the same
   void deleteItemsAndClear() 
   { 
-    for (int i = 0; i < numItems_; i++)
+    for (unsigned i = 0; i < numItems_; i++)
       if (items_[i]) delete items_[i];
     clear();
     assert(map_->size() == (unsigned int) numItems_);
@@ -226,7 +226,7 @@ class HashArray
     // items_ is not deleted,and maxItems_ stay the same
   void deleteItemsAndClearCompress() 
   { 
-    for (int i = 0; i < numItems_; i++)
+    for (unsigned i = 0; i < numItems_; i++)
       if (items_[i]) delete items_[i];
     clear();
     assert(map_->size() == (unsigned int) numItems_);
@@ -234,7 +234,7 @@ class HashArray
   }
 
 
-  int size() const { return numItems_; }
+  unsigned size() const { assert (numItems_ >= 0); return numItems_; }
 
   bool empty() const { return size()==0; } 
 
@@ -273,7 +273,7 @@ class HashArray
       // move everything past the item back
     Type removedItem = items_[index];
     map_->erase(map_->find(items_[index]));
-    for (int i = index+1; i < numItems_; i++) items_[i-1] = items_[i];
+    for (unsigned i = index+1; i < numItems_; i++) items_[i-1] = items_[i];
 
     //commented out: Type may not be a basic type and thus need deep copying
     //int numItemsToMove = numItems_ - index - 1;
@@ -284,7 +284,7 @@ class HashArray
     
       // subtract the indexes of the moved items by 1
     typename hash_map<Type, int, HashFn, EqualFn>::iterator it;
-    for (int i = index; i < numItems_; i++)
+    for (unsigned i = index; i < numItems_; i++)
     {
       it = map_->find(items_[i]);
       assert(it != map_->end());
@@ -343,7 +343,7 @@ class HashArray
     // reorder randomly
   void shuffle() 
   {
-    for (int i = 0; i < numItems_; i++) 
+    for (unsigned i = 0; i < numItems_; i++) 
     {
         // swap item i with a random item
       int swapwith = Random::randomOneOf(numItems_);
@@ -360,7 +360,7 @@ class HashArray
   {
     assert(numItems_ > 0);
     int max = 0;
-    for (int i = 1; i < numItems_; i++) 
+    for (unsigned i = 1; i < numItems_; i++) 
     {
       if (items_[i] > items_[max])
         max = i;
@@ -374,7 +374,7 @@ class HashArray
   {
     assert(numItems_ > 0);
     Type max = items_[0];
-    for (int i = 1; i < numItems_; i++) 
+    for (unsigned i = 1; i < numItems_; i++) 
     {
       if (items_[i] > max)
         max = items_[i];
@@ -402,7 +402,7 @@ class HashArray
         {
           //commented out: Type may not be a basic type & thus need deep copying
           //memcpy(tempItems, items_, numItems_*sizeof(Type));
-          for (int i = 0; i < numItems_; i++) tempItems[i] = items_[i];
+          for (unsigned i = 0; i < numItems_; i++) tempItems[i] = items_[i];
         }
         delete [] items_;
         items_ = tempItems;

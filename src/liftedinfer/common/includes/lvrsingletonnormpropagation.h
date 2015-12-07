@@ -3,18 +3,21 @@
 #include "lvrmln.h"
 #include "hashalgorithm.h"
 
+#include <cassert>
+
 struct LvrSingletonNormPropagation
 {
 
-	static void propagateNormalizedCNF(vector<WClause*>& CNF, Atom* atomToSplit,int singletonIndex, int numTrue)
+	static void propagateNormalizedCNF(vector<WClause*>& CNF, Atom* atomToSplit,int singletonIndex, unsigned numTrue)
 	{
-		int numFalse = atomToSplit->terms[singletonIndex]->domain.size() - numTrue;
+		assert (numTrue <= atomToSplit->terms[singletonIndex]->domain.size());
+		unsigned numFalse = atomToSplit->terms[singletonIndex]->domain.size() - numTrue;
 		if(numFalse==0)
 		{
 			//simply remove all the matching predicates and set to satisfied
 			for(unsigned int i=0;i<CNF.size();i++)
 			{
-				for(int j=0;j<CNF[i]->atoms.size();j++)
+				for(unsigned j=0;j<CNF[i]->atoms.size();j++)
 				{
 					if(CNF[i]->atoms[j]->symbol->id == atomToSplit->symbol->id)
 					{
@@ -63,7 +66,7 @@ struct LvrSingletonNormPropagation
 			{
 				for(unsigned int j=0;j<CNF.size();j++)
 				{
-					vector<int> foundIds;
+					vector<unsigned> foundIds;
 					vector<vector<LvrTerm*> > termsToCheck;
 					for(unsigned int k=0;k<CNF[j]->atoms.size();k++)
 					{
@@ -138,7 +141,7 @@ struct LvrSingletonNormPropagation
 	}
 
 	static void splitClause(WClause* clause,int atomToRemove,map<int,vector<int> > domainReduceMap,
-		int numTrue,int numFalse, vector<WClause*>& outClauses)
+		unsigned numTrue,unsigned numFalse, vector<WClause*>& outClauses)
 	{
 		outClauses.push_back(clause);
 		bool changed=false;
@@ -231,7 +234,7 @@ struct LvrSingletonNormPropagation
 
 		for(unsigned int i=0;i<outClauses.size();i++)
 		{
-			for(int j=0;j<outClauses[i]->atoms.size();j++)
+			for(unsigned j=0;j<outClauses[i]->atoms.size();j++)
 			{
 				if(outClauses[i]->atoms[j]->symbol->id == atomToRemove)
 				{

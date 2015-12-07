@@ -5,11 +5,11 @@
 
 struct LCacheEntry
 {
-	int hits;
 	vector<WClause*> CNF;
 	LogDouble wCount;
 	LCacheEntry(vector<WClause*> CNF_,LogDouble wCount_);
 	bool deleteFlag;
+  	int hits;
 	~LCacheEntry();
 };
 
@@ -26,7 +26,6 @@ private:
 	vector<LCacheEntry*> cacheEntries;
 	vector<int> mostRecentList;
 	LvrMLN& mln;
-	int mostRecentCounter;
 	int cacheSize;
 	int currentIndex;
 	int successfulHits;
@@ -35,10 +34,11 @@ private:
 	int markStart;
 	int markEnd;
 	int numEntries;
+  	int mostRecentCounter;
 	LUnifier* unifier;
 	bool isFull()
 	{
-		return numEntries == cacheEntries.size();
+          return (unsigned) numEntries == cacheEntries.size();
 	}
 };
 

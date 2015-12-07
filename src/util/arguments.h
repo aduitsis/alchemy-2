@@ -220,7 +220,7 @@ class ARGS
 
   static void cleanUp();
   static ArgsRetCode parseFromCommandLine(int,char**);
-  static ArgsRetCode parseFromFile(char*f="argsFile");
+  static ArgsRetCode parseFromFile(const char *f="argsFile");
   static void parse(int, char**, char*&, ostream* prout=NULL);
   static void parse(int i, char**c, ostream* prout=NULL) 
   { char*d=NULL; parse(i,c,d, prout); }

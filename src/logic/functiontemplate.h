@@ -96,7 +96,7 @@ class FunctionTemplate : public PredicateTemplate
   {
     string ftName;
     ftName.append(funcName);
-    for (int i = 0; i < typeNames.size(); i++)
+    for (unsigned i = 0; i < typeNames.size(); i++)
     {
 	  ftName.append("_").append(typeNames[i]);
     }
@@ -135,7 +135,7 @@ class FunctionTemplate : public PredicateTemplate
   {
   	out << retTypeName_ << " ";
     out << name_ << "(";
-    for (int i = 0; i < termTypesAsStr_->size(); i++)
+    for (unsigned i = 0; i < termTypesAsStr_->size(); i++)
     {
       out << (*termTypesAsStr_)[i]; 
       out << ((i!=termTypesAsStr_->size()-1)?",":")");
@@ -148,7 +148,7 @@ class FunctionTemplate : public PredicateTemplate
   {
   	out << retTypeName_ << " ";
     out << name_ << "(";
-    for (int i = 0; i < termTypesAsStr_->size(); i++)
+    for (unsigned i = 0; i < termTypesAsStr_->size(); i++)
     {
       out << "a" << i+1; 
       out << ((i!=termTypesAsStr_->size()-1)?",":")");

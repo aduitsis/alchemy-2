@@ -113,7 +113,7 @@ class PredicateTemplate
   virtual ~PredicateTemplate() 
   { 
     delete [] name_;
-    for (int i = 0; i < termTypesAsStr_->size(); i++)
+    for (unsigned i = 0; i < termTypesAsStr_->size(); i++)
       delete [] (*termTypesAsStr_)[i];
     delete termTypesAsInt_; 
     delete termTypesAsStr_; 
@@ -266,7 +266,7 @@ class PredicateTemplate
   const char* const getName() const { return name_; }
 
 
-  int getNumTerms() const 
+  unsigned getNumTerms() const 
   {
     assert(termTypesAsStr_->size() == termTypesAsInt_->size());
     return termTypesAsInt_->size(); 
@@ -322,7 +322,7 @@ class PredicateTemplate
    * 
    * @param idx Index of the term to be marked as a unique variable index.
    */
-  void addUniqueVarIndex(const int& idx) const 
+  void addUniqueVarIndex(unsigned idx) const 
   {
     assert(idx < getNumTerms());
     uniqueVarIndexes_->append(idx);
@@ -331,7 +331,7 @@ class PredicateTemplate
   virtual ostream& print(ostream& out) const
   {
     out << name_ << "(";
-    for (int i = 0; i < termTypesAsStr_->size(); i++)
+    for (unsigned i = 0; i < termTypesAsStr_->size(); i++)
     {
       out << (*termTypesAsStr_)[i];
       if (uniqueVarIndexes_->contains(i))
@@ -352,7 +352,7 @@ class PredicateTemplate
     }
     
     out << "(";
-    for (int i = 0; i < termTypesAsStr_->size(); i++)
+    for (unsigned i = 0; i < termTypesAsStr_->size(); i++)
     {
       out << "a" << i+1; 
       if (uniqueVarIndexes_->contains(i))

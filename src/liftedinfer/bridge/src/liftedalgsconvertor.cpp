@@ -103,7 +103,7 @@ void LiftedAlgsConvertor::doConversion(vector<vector<int> >& queriesIntRep, vect
 	if(removeSelfJoins)
 	{
 		bool isSelfJoined = false;
-		for(int i=0;i<lvrMln->clauses.size();i++)
+		for(unsigned i=0;i<lvrMln->clauses.size();i++)
 		{
 			if(lvrMln->clauses[i]->isSelfJoined())
 			{
@@ -360,7 +360,7 @@ void LiftedAlgsConvertor::convertInputMLNToLifted(const MLN* mln, const Domain* 
 	IndexClauseHashArray* indexClauses = (*fca)[i]->indexClauses;
 	for (int j = 0; j < indexClauses->size(); j++)
 	{
-	  int idx = (*indexClauses)[j]->index;
+	  int idx = (*indexClauses)[j]->index; (void) idx;
 	  Clause* c = (*indexClauses)[j]->clause;
 	  vector<PredicateSymbol*> symbolsToAdd;
 	  WClause* lCls = convertClauseToLifted(c,domain,symbolsToAdd,containsGroundedClause);
@@ -430,7 +430,7 @@ void LiftedAlgsConvertor::processWeightLearningInput(LvrParams* params,bool init
 		if(initialization)
 		{
 			bool isSelfJoined = false;
-			for(int i=0;i<lvrMln->clauses.size();i++)
+			for(unsigned i=0;i<lvrMln->clauses.size();i++)
 			{
 				if(lvrMln->clauses[i]->isSelfJoined())
 				{

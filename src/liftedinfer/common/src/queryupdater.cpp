@@ -166,10 +166,10 @@ void LvrQueryUpdater::doUpdateQueryValues(Atom* atom,int sampledTrueVal)
 			return;
 		if(!value)
 		{
-			bool assignment = false;
+                  //bool assignment = false;
 			if(sampledTrueVal!=0)
 			{
-				assignment = true;
+                          //assignment = true;
 				lvrAtomHashTemplate->incrementValue(atom,sampledTrueVal);
 			}
 			//currentSampledValue->update(atom,assignment);
@@ -322,10 +322,10 @@ void LvrQueryUpdater::updateQueryValuesLVGibbs(Atom* atom,int sampledTrueVal)
 			return;
 		if(!value)
 		{
-			bool assignment = false;
+                  //bool assignment = false;
 			if(sampledTrueVal!=0)
 			{
-				assignment = true;
+                          //assignment = true;
 				lvrAtomHashTemplate->incrementValue(atom,sampledTrueVal);
 			}
 			//currentSampledValue->update(atom,assignment);
@@ -551,11 +551,11 @@ void LvrQueryUpdater::updateDontCare()
 	{
 		if(!values[i])
 		{
-			bool assignment = false;
+                  //bool assignment = false;
 			double v = LvRandomGenUtil::Instance()->getNormRand();
 			if(v > 0.5)
 			{
-				assignment = true;
+                          //assignment = true;
 				lvrAtomHashTemplate->incrementIntValue(keys[i]);
 			}
 			//currentSampledValue->setValue(keys[i],assignment);

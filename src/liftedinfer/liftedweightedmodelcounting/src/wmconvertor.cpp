@@ -274,7 +274,7 @@ void LWMConvertor::updateMLN(int formulaIndex,int symId,vector<WClause*>& newCla
 void LWMConvertor::convertMLN()
 {
 	mln.preprocessEvidenceWMPTP();
-	int originalMLNSize = mln.clauses.size();
+	//int originalMLNSize = mln.clauses.size();
 	vector<WClause*> newClausestoAdd;
 	mln.formulas.clear();
 	for(int i=0;i<mln.clauses.size();i++)

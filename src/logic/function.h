@@ -94,7 +94,7 @@ class Function
 
   ~Function() 
   {
-    for (int i = 0; i < terms_->size(); i++)
+    for (unsigned i = 0; i < terms_->size(); i++)
       delete (*terms_)[i];
     delete terms_;
     if (intArrRep_) delete intArrRep_;
@@ -155,14 +155,14 @@ class Function
     // Caller should not delete the returned const char* nor modify its
     // contents. Returns NULL if idx is larger than the possible number of 
     // terms
-  const char* getTermTypeAsStr(const int& idx) const 
+  const char* getTermTypeAsStr(unsigned idx) const 
   {
     if (idx >= template_->getNumTerms()) return NULL;
     return template_->getTermTypeAsStr(idx); 
   }
 
     // Returns -1 if idx is larger than the possible number of terms
-  int getTermTypeAsInt(const int& idx) const 
+  int getTermTypeAsInt(unsigned idx) const 
   {
     if (idx >= template_->getNumTerms()) return -1;
     return template_->getTermTypeAsInt(idx); 
@@ -218,7 +218,7 @@ class Function
   ostream& printAsInt(ostream& out) const
   {
     out << template_->getId() << "(";
-    for (int i = 0; i < terms_->size(); i++)
+    for (unsigned i = 0; i < terms_->size(); i++)
     {
       (*terms_)[i]->printAsInt(out); 
       out << ((i!=terms_->size()-1)?",":")");
@@ -238,7 +238,7 @@ class Function
   ostream& print(ostream& out, const Domain* const & domain) const
   {
     out << template_->getName() << "(";
-    for (int i = 0; i < terms_->size(); i++)
+    for (unsigned i = 0; i < terms_->size(); i++)
     {
       (*terms_)[i]->print(out, domain); 
       out << ((i!=terms_->size()-1)?",":")");
@@ -258,7 +258,7 @@ class Function
 
     terms_ = new Array<Term*>;
     Array<Term*>* fterms = f.terms_;
-    for (int i = 0; i < fterms->size(); i++)
+    for (unsigned i = 0; i < fterms->size(); i++)
     {
       Term* t = (*fterms)[i];
       terms_->append(new Term(*t, (void*)this, false));
@@ -280,7 +280,7 @@ class Function
   
   bool noDirtyTerms()
   {
-    for (int i = 0; i < terms_->size(); i++)
+    for (unsigned i = 0; i < terms_->size(); i++)
       if ((*terms_)[i]->isDirty()) return false;
     return true;
   }

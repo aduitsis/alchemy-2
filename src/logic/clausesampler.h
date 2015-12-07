@@ -137,7 +137,7 @@ class ClauseSampler
   int choosePredPos(const Array<float>& corrProbLimit)
   {
     float r = random_.random();    
-    for (int predPos = 0; predPos < corrProbLimit.size(); predPos++)
+    for (unsigned predPos = 0; predPos < corrProbLimit.size(); predPos++)
       if (r < corrProbLimit[predPos]) return predPos;
     return -1;
   }

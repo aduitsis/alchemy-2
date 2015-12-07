@@ -36,7 +36,7 @@ void TestModelCount::manuallyTestModelCount(int n)
 		truthValues.push_back(0);
 	}
 	LogDouble wt =LogDouble();
-	double wt1=0;
+	//double wt1=0;
 	cout<<"Enumerating all combinations..."<<endl;
 	while(!done)
 	{
@@ -98,7 +98,7 @@ LogDouble TestModelCount::manuallyTestModelCount2()
 		truthValues.push_back(0);
 	}
 	LogDouble wt =LogDouble();
-	double wt1=0;
+	//double wt1=0;
 	//cout<<"Enumerating all combinations..."<<endl;
 	while(!done)
 	{
@@ -131,7 +131,7 @@ LogDouble TestModelCount::manuallyTestModelCount3()
 		truthValues.push_back(0);
 	}
 	LogDouble wt =LogDouble();
-	double wt1=0;
+	//double wt1=0;
 	//cout<<"Enumerating all combinations..."<<endl;
 	while(!done)
 	{
@@ -163,7 +163,7 @@ LogDouble TestModelCount::manuallyTestModelCount5()
 		truthValues.push_back(0);
 	}
 	LogDouble wt =LogDouble();
-	double wt1=0;
+	//double wt1=0;
 	//cout<<"Enumerating all combinations..."<<endl;
 	while(!done)
 	{
@@ -212,7 +212,7 @@ LogDouble TestModelCount::manuallyTestModelCount6()
 		truthValues.push_back(0);
 	}
 	LogDouble wt =LogDouble();
-	double wt1=0;
+	//double wt1=0;
 	//cout<<"Enumerating all combinations..."<<endl;
 	while(!done)
 	{
@@ -250,7 +250,7 @@ LogDouble TestModelCount::manuallyTestModelCount8()
 		truthValues.push_back(0);
 	}
 	LogDouble wt =LogDouble();
-	double wt1=0;
+	//double wt1=0;
 	//cout<<"Enumerating all combinations..."<<endl;
 	while(!done)
 	{
@@ -286,7 +286,7 @@ LogDouble TestModelCount::manuallyTestModelCount9()
 		truthValues.push_back(0);
 	}
 	LogDouble wt =LogDouble();
-	double wt1=0;
+	//double wt1=0;
 	//cout<<"Enumerating all combinations..."<<endl;
 	while(!done)
 	{
@@ -356,7 +356,7 @@ LogDouble TestModelCount::manuallyTestModelCount10()
 		truthValues.push_back(0);
 	}
 	LogDouble wt =LogDouble();
-	double wt1=0;
+	//double wt1=0;
 	//cout<<"Enumerating all combinations..."<<endl;
 	while(!done)
 	{
@@ -388,7 +388,7 @@ LogDouble TestModelCount::manuallyTestModelCount11()
 		truthValues.push_back(0);
 	}
 	LogDouble wt =LogDouble();
-	double wt1=0;
+	//double wt1=0;
 	//cout<<"Enumerating all combinations..."<<endl;
 	while(!done)
 	{
@@ -1819,7 +1819,7 @@ LogDouble TestModelCount::manuallyTestModelCountxx()
 		truthValues.push_back(0);
 	}
 	LogDouble wt =LogDouble();
-	double wt1=0;
+	//double wt1=0;
 	//cout<<"Enumerating all combinations..."<<endl;
 	while(!done)
 	{
@@ -2303,7 +2303,7 @@ LogDouble TestModelCount::manuallyTestModelCount17()
 		truthValues.push_back(0);
 	}
 	LogDouble wt =LogDouble();
-	double wt1=0;
+	//double wt1=0;
 	//cout<<"Enumerating all combinations..."<<endl;
 	while(!done)
 	{

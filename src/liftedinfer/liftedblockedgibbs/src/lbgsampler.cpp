@@ -145,7 +145,7 @@ void LBGSampler::startLVBGibbs(LvrParams* params)
 		windowSize = RAND_MAX;
 	else
 		windowSize = CLUSTERINGWINDOWSIZE;
-	bool printResults = false;
+	//bool printResults = false;
 	time_t start,end;
 	time (&start);
 	//set defaults
@@ -166,7 +166,7 @@ void LBGSampler::startLVBGibbs(LvrParams* params)
 	}
 	if(params->burnMaxSteps <= 0)
 		params->burnMaxSteps = BURNINSTEPS;
-	bool clustersRead = false;
+	//bool clustersRead = false;
 	time_t autotime;
 	time(&autotime);
 	int printind=0;
@@ -191,7 +191,7 @@ void LBGSampler::startLVBGibbs(LvrParams* params)
 		if(filestr != NULL)
 		{
 			cout<<"Reading current cluster file = "<<params->inClusterFile.c_str()<<endl;
-			clustersRead = true;
+			//clustersRead = true;
 			char* buf = new char[1024];
 			while(filestr)
 			{
@@ -243,7 +243,7 @@ void LBGSampler::startLVBGibbs(LvrParams* params)
 
 		for(unsigned int t=0;t<windowSize;t++)
 		{
-			time_t t1;
+                  //time_t t1;
 			int currIterationSize;
 			if(params->isWeightLearning)
 				currIterationSize = iterationsAcrossCalls;
@@ -271,7 +271,7 @@ void LBGSampler::startLVBGibbs(LvrParams* params)
 			{
 				vector<WClause*> newClauses;
 				addPTPEvidence(i,newClauses,false);
-				int lvpCost;
+				//int lvpCost;
 				if(lp->runPTP(newClauses,LVRClusterList[i],params->gibbsRB) == -1)
 				{
 					cout<<"Lifted Gibbs Sampler::Error,trying to reinitialize!!"<<endl;

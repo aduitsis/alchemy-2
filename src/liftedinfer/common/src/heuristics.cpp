@@ -9,15 +9,15 @@ Atom* LHeuristics::getAtomToSplit(vector<WClause*> CNF,bool ptpexactmar)
 	int minNumDomainsST = 100000;
 	Atom* minDomainNonSingleton = NULL;
 	int minNumDomainsNST = 100000;
-	Atom* minDomainUCAtom = NULL;
+	Atom* minDomainUCAtom = NULL; (void) minDomainUCAtom;
 	int minNumDomainsUCAtom = 100000;
 	int maxDegreeSingleton = 0;
 	int maxDegreeNST = 0;
 	int maxDegreeUC = 0;
 	int maxDegreeConstant = 0;
-	Atom* atomMaxDegree_S = NULL;
-	Atom* atomMaxDegree_NS = NULL;
-	Atom* atomMaxDegree_UC = NULL;
+	Atom* atomMaxDegree_S = NULL; (void) atomMaxDegree_S;
+	Atom* atomMaxDegree_NS = NULL; (void) atomMaxDegree_NS;
+	Atom* atomMaxDegree_UC = NULL; (void) atomMaxDegree_UC;
 	Atom* atomMaxDegree_Const = NULL;
 	//compute the number of unsatisfied clauses that each predicate participates in
 	map<int,int> degree;

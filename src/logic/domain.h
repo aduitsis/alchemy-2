@@ -356,7 +356,7 @@ class Domain
     int typeId = typeDualMap_->insert(name); 
     if (typeId < 0) return -1;
 
-    if (typeId != constantsByType_->size())
+    if ((unsigned) typeId != constantsByType_->size())
     {
       cout << "Error: In Domain::addType(). Expected typeId " << typeId 
            << " to be equal to " << constantsByType_->size() << endl;
@@ -411,10 +411,10 @@ class Domain
   {
     Array<int>* cbt = (*constantsByType_)[typeId];
     Array<int>* retArr = new Array<int>;
-    for (int i = 0; i < cbt->size(); i++)
+    for (unsigned i = 0; i < cbt->size(); i++)
       retArr->append((*cbt)[i]);
     Array<int>* ecbt = (*externalConstantsByType_)[typeId];
-    for (int i = 0; i < ecbt->size(); i++)
+    for (unsigned i = 0; i < ecbt->size(); i++)
       retArr->append((*ecbt)[i]);
     retArr->quicksort();
     return retArr;
@@ -433,7 +433,7 @@ class Domain
   int getConstantIndexInType(const int& constId, const int& typeId) const
   {
   	const Array<int>* constArray = getConstantsByType(typeId);
-  	for (int i = 0; i < constArray->size(); i++)
+  	for (unsigned i = 0; i < constArray->size(); i++)
   	  if (constId == (*constArray)[i])
         return i;
   	return -1;
@@ -544,7 +544,7 @@ class Domain
     {
       bool newType = true;
       Array<const char*>* prevTypes = getConstantTypeNames(constId);
-      for (int i = 0; i < prevTypes->size(); i++)
+      for (unsigned i = 0; i < prevTypes->size(); i++)
       {
         if (strcmp((*prevTypes)[i], typeName) == 0)
         {
@@ -699,7 +699,7 @@ class Domain
     else
     {
       Array<const char*>* typeNames = new Array<const char*>;
-      for (int i = 0; i < typeIds->size(); i++)
+      for (unsigned i = 0; i < typeIds->size(); i++)
         typeNames->append(getTypeName((*typeIds)[i]));
       return typeNames;
     }
@@ -1047,7 +1047,7 @@ class Domain
    * 
    * @param index Index of the block.
    */
-  const Predicate* getTruePredInBlock(const int& index) const
+  const Predicate* getTruePredInBlock(unsigned index) const
   {
     assert(index <= truePredsInBlock_->size());
     return (*truePredsInBlock_)[index];
@@ -1060,7 +1060,7 @@ class Domain
    * @param index Index of the block.
    * @param pred Predicate being set to the true one in the block.
    */
-  void setTruePredInBlock(const int& index, Predicate* const & pred) const
+  void setTruePredInBlock(unsigned index, Predicate* const & pred) const
   {
     assert(index <= truePredsInBlock_->size());
     if ((*truePredsInBlock_)[index]) delete (*truePredsInBlock_)[index];
@@ -1152,31 +1152,31 @@ class Domain
     numFalseNonEvidGndingsPerClause_ = numFalseNonEvidGndingsPerClause;
   }
 
-  void setNumTrueNonEvidGndings(const int & clauseIdx, const double & count)
+  void setNumTrueNonEvidGndings(unsigned clauseIdx, const double & count)
   {
     if (numTrueNonEvidGndingsPerClause_->size() <= clauseIdx)
       numTrueNonEvidGndingsPerClause_->growToSize(clauseIdx + 1);
     (*numTrueNonEvidGndingsPerClause_)[clauseIdx] = count;
   }
 
-  void setNumFalseNonEvidGndings(const int & clauseIdx, const double & count)
+  void setNumFalseNonEvidGndings(unsigned clauseIdx, const double & count)
   {
     if (numFalseNonEvidGndingsPerClause_->size() <= clauseIdx)
       numFalseNonEvidGndingsPerClause_->growToSize(clauseIdx + 1);
     (*numFalseNonEvidGndingsPerClause_)[clauseIdx] = count;
   }
 
-  const double getNumTrueNonEvidGroundings(const int & clauseIdx) const
+  const double getNumTrueNonEvidGroundings(unsigned clauseIdx) const
   {
     return (*numTrueNonEvidGndingsPerClause_)[clauseIdx];
   }  
 
-  const double getNumFalseNonEvidGroundings(const int & clauseIdx) const
+  const double getNumFalseNonEvidGroundings(unsigned clauseIdx) const
   {
     return (*numFalseNonEvidGndingsPerClause_)[clauseIdx];
   }  
 
-  const double getNumNonEvidGroundings(const int & clauseIdx) const
+  const double getNumNonEvidGroundings(unsigned clauseIdx) const
   {
     return ((*numTrueNonEvidGndingsPerClause_)[clauseIdx] +
             (*numFalseNonEvidGndingsPerClause_)[clauseIdx]);
@@ -1189,7 +1189,7 @@ class Domain
     Term *term;
     const PredicateTemplate *pt = getPredicateTemplate(predId);
     Predicate *pred = new Predicate(pt);
-    for (int i = 0; i < constants->size(); i++)
+    for (unsigned i = 0; i < constants->size(); i++)
     {
       term = new Term((*constants)[i]);
       pred->appendTerm(term);
@@ -1199,7 +1199,7 @@ class Domain
 
     //get the predicate corresponding to the predId
     //Note: caller is responsible for deleting it
-  Predicate * getPredicate(const int& predId)
+  Predicate * getPredicate(int predId)
   {
     const PredicateTemplate *pt = getPredicateTemplate(predId);
     Predicate *pred = new Predicate(pt);

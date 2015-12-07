@@ -48,7 +48,7 @@ struct LClusterUtil
 			else
 			{
 				sort(foundPos.begin(),foundPos.end());
-				int itx=0;
+				//int itx=0;
 				vector<int> tmpAtomIds;
 				vector<int> tmpCInds;
 				tmpCInds.push_back(i);
@@ -83,7 +83,7 @@ struct LClusterUtil
 			}
 			disjointCNFList.push_back(tmpClauses);
 		}
-		for(unsigned int i=0;i<numEmptyClauses;i++)
+		for(int i=0;i<numEmptyClauses;i++)
 		{
 			vector<WClause*> tmpClauses;
 			WClause* nClause= new WClause();

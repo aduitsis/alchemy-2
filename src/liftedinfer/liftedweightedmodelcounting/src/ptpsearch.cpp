@@ -192,7 +192,7 @@ LogDouble LPTPSearch::weightedModelCount(vector<WClause*>& CNF,LvrPTPNode* paren
 
 	for(int t=0;t<decomposedList.size();t++)
 	{
-		int dum=1;
+          //int dum=1;
 		bool isDecomposed=false;
 		int powerFactor;
 		isDecomposed = decomposeCNF(decomposedList[t],powerFactor);
@@ -304,7 +304,7 @@ LvrMLN::print(decomposedList[t],"UNITPROP");
 				vector<LogDouble> branchWeights;
 				if(atom->isConstant())
 				{
-					int idToUse = id++;
+                                        int idToUse = id++; (void) idToUse;
 					//propositional atom
 					if(!selfJoined)
 						PropositionalResolution::doPropositionalSplit(decomposedList[t],atom,tempCNFList);

@@ -7,12 +7,12 @@ static void permuteTerms(vector<LvrTerm*> terms, vector<vector<int> >& permutedD
 {
 	if(terms.size()==0)
 		return;
-	map<int,int> domainIndex;
+	map<unsigned,unsigned> domainIndex;
 	int numberOfGroundings=1;
 	for(unsigned int i=0;i<terms.size();i++)
 	{
 		//Initialize to first position
-		domainIndex.insert(pair<int,int>(i,0));
+		domainIndex.insert(pair<unsigned,unsigned>(i,0));
 		numberOfGroundings *= terms[i]->domain.size();
 	}	
 	int iter = 0;
@@ -27,7 +27,9 @@ static void permuteTerms(vector<LvrTerm*> terms, vector<vector<int> >& permutedD
 		}
 		permutedDomainList.push_back(domainValues);
 		//Update pointers
-		int ind=terms.size()-1;
+                if (terms.size() == 0)
+                  break;
+                unsigned ind=terms.size()-1;
 		domainIndex[ind]++;
 		while(domainIndex[ind] == terms[ind]->domain.size())
 		{

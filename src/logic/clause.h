@@ -138,7 +138,7 @@ class Clause
     locked_ = c.locked_;
     predicates_ = new Array<Predicate*>;
     Array<Predicate*>* cpredicates = c.predicates_;
-    for (int i = 0; i < cpredicates->size(); i++)
+    for (unsigned i = 0; i < cpredicates->size(); i++)
     {
       Predicate* p = (*cpredicates)[i];
       predicates_->append(new Predicate(*p, this));      
@@ -163,7 +163,7 @@ class Clause
     if (c.varIdToVarsGroundedType_)
     {
       varIdToVarsGroundedType_ = new Array<VarsGroundedType*>;
-      for (int i = 0; i < c.varIdToVarsGroundedType_->size(); i++)
+      for (unsigned i = 0; i < c.varIdToVarsGroundedType_->size(); i++)
       {
         VarsGroundedType* vgt = (*(c.varIdToVarsGroundedType_))[i];
         varIdToVarsGroundedType_->append(new VarsGroundedType(*vgt));
@@ -189,17 +189,17 @@ class Clause
 
         cache->growToSize(otherCache->size(),NULL);
 
-        for (int i = 0; i < otherCache->size(); i++)
+        for (unsigned i = 0; i < otherCache->size(); i++)
         {
           (*cache)[i] = new Array<Array<CacheCount*>*>;
           (*cache)[i]->growToSize((*otherCache)[i]->size(), NULL);
-          for (int j = 0; j < (*otherCache)[i]->size(); j++)
+          for (unsigned j = 0; j < (*otherCache)[i]->size(); j++)
           {
             Array<CacheCount*>* ccArr = (*(*otherCache)[i])[j];
             if (ccArr == NULL) continue;
             (*(*cache)[i])[j] = new Array<CacheCount*>;
             (*(*cache)[i])[j]->growToSize(ccArr->size());
-            for (int k = 0; k < ccArr->size(); k++)
+            for (unsigned k = 0; k < ccArr->size(); k++)
             {
               (*(*(*cache)[i])[j])[k] = new CacheCount((*ccArr)[k]->g,
                                                        (*ccArr)[k]->c,
@@ -221,7 +221,7 @@ class Clause
 
   ~Clause() 
   {
-    for (int i = 0; i < predicates_->size(); i++)
+    for (unsigned i = 0; i < predicates_->size(); i++)
       delete (*predicates_)[i];
     delete predicates_;
     if (intArrRep_) delete intArrRep_;
@@ -235,7 +235,7 @@ class Clause
   {
     double sizeMB = (fixedSizeB_ + intArrRep_->size()*sizeof(int) + 
                      predicates_->size()*sizeof(Predicate*)) /1000000.0;
-    for (int i = 0; i < predicates_->size(); i++)
+    for (unsigned i = 0; i < predicates_->size(); i++)
       sizeMB += (*predicates_)[i]->sizeMB();
     if (auxClauseData_ != NULL) sizeMB += auxClauseData_->sizeMB(); 
     return sizeMB;
@@ -253,7 +253,7 @@ class Clause
   void compress()
   {
     predicates_->compress();
-    for (int i = 0; i < predicates_->size(); i++) (*predicates_)[i]->compress();
+    for (unsigned i = 0; i < predicates_->size(); i++) (*predicates_)[i]->compress();
     if (intArrRep_) intArrRep_->compress();
     if (varIdToVarsGroundedType_) varIdToVarsGroundedType_->compress();
     if (auxClauseData_) auxClauseData_->compress();
@@ -306,7 +306,7 @@ class Clause
 
   bool containsPredicate(const Predicate* const & pred) const
   {
-    for (int i = 0; i < predicates_->size(); i++)
+    for (unsigned i = 0; i < predicates_->size(); i++)
       if ((*predicates_)[i]->same((Predicate*)pred)) return true;
     return false;
   }
@@ -315,7 +315,7 @@ class Clause
   int getNumVariables() const
   {
     hash_set<int> intset;
-    for (int i = 0; i < predicates_->size(); i++)
+    for (unsigned i = 0; i < predicates_->size(); i++)
       for (int j = 0; j < (*predicates_)[i]->getNumTerms(); j++)
       {
         if ((*predicates_)[i]->getTerm(j)->getType() == Term::VARIABLE)
@@ -328,7 +328,7 @@ class Clause
   int getNumVariablesAssumeCanonicalized() const
   {
     int minVarId = 0;
-    for (int i = 0; i < predicates_->size(); i++)
+    for (unsigned i = 0; i < predicates_->size(); i++)
       for (int j = 0; j < (*predicates_)[i]->getNumTerms(); j++)
       {
         if ((*predicates_)[i]->getTerm(j)->getType() == Term::VARIABLE &&
@@ -363,7 +363,7 @@ class Clause
   * 
   * @param i Index of predicate to be removed.
   */
-  Predicate* removePredicate(const int& i) 
+  Predicate* removePredicate(unsigned i) 
   { 
     if (0 <= i && i < predicates_->size()) 
     { setDirty(); return predicates_->removeItemFastDisorder(i); }
@@ -376,10 +376,10 @@ class Clause
   */
   bool hasRedundantPredicates()
   {
-    for (int i = 0; i < predicates_->size(); i++)
+    for (unsigned i = 0; i < predicates_->size(); i++)
     {
       Predicate* ip = (*predicates_)[i];
-      for (int j = i+1; j < predicates_->size(); j++)
+      for (unsigned j = i+1; j < predicates_->size(); j++)
       {
         Predicate* jp = (*predicates_)[j];
         if (jp->same(ip) && jp->getSense() == ip->getSense()) return true;
@@ -393,10 +393,10 @@ class Clause
   bool removeRedundantPredicates()
   {
     bool changed = false;
-    for (int i = 0; i < predicates_->size(); i++)
+    for (unsigned i = 0; i < predicates_->size(); i++)
     {
       Predicate* ip = (*predicates_)[i];
-      for (int j = i+1; j < predicates_->size(); j++)
+      for (unsigned j = i+1; j < predicates_->size(); j++)
       {
         Predicate* jp = (*predicates_)[j];
         if (jp->same(ip) && jp->getSense() == ip->getSense())
@@ -428,13 +428,13 @@ class Clause
     IntHashArray varAppearOrder;
     getVarOrder(varAppearOrder);
 
-    int newVarId = 0;
-    for (int i = 0; i < varAppearOrder.size(); i++)
+    unsigned newVarId = 0;
+    for (unsigned i = 0; i < varAppearOrder.size(); i++)
     {
       int varId = varAppearOrder[i];
       ++newVarId;
       Array<Term*>& vars = (*vgtArr)[varId]->vars;
-      for (int j = 0; j < vars.size(); j++)  vars[j]->setId(-newVarId);
+      for (unsigned j = 0; j < vars.size(); j++)  vars[j]->setId(-newVarId);
       
 	  if(oldVarIdToNewVarId)
       {
@@ -446,7 +446,7 @@ class Clause
       (*oldVarIdToNewVarId)[0] = 0;
     assert(newVarId == varAppearOrder.size());
 
-    int i = 0, j = 0;
+    unsigned i = 0, j = 0;
     while (i < predicates_->size())
     {
       while (++j < predicates_->size() 
@@ -465,7 +465,7 @@ class Clause
                                  PredicateHashArray& unseenPreds,
                                  Array<Predicate*>& seenPreds)
   {
-    for (int j = 0; j < terms->size(); j++)
+    for (unsigned j = 0; j < terms->size(); j++)
     {
       bool parIsPred;
       Predicate* parent = (Predicate*) (*terms)[j]->getParent(parIsPred);      
@@ -495,7 +495,7 @@ class Clause
     hash_set<int> seenIds;
 
     seenPreds.append((*predicates_)[0]);
-    for (int i = 1; i < predicates_->size(); i++) 
+    for (unsigned i = 1; i < predicates_->size(); i++) 
       unseenPreds.append((*predicates_)[i]);
 
     while (!seenPreds.empty())
@@ -511,7 +511,7 @@ class Clause
         if (t->getType() == Term::VARIABLE)
         {
           Array<Term*>* terms = (*varIdToTerms)[-id];
-          for (int j = 0; j < terms->size(); j++)
+          for (unsigned j = 0; j < terms->size(); j++)
           {
             bool parIsPred;
             Predicate* parent = (Predicate*) (*terms)[j]->getParent(parIsPred);
@@ -537,7 +537,7 @@ class Clause
         if (t->getType() == Term::CONSTANT)
         {
           Array<Term*>* terms = (*constIdToTerms)[id];
-          for (int j = 0; j < terms->size(); j++)
+          for (unsigned j = 0; j < terms->size(); j++)
           {
             bool parIsPred;
             Predicate* parent = (Predicate*) (*terms)[j]->getParent(parIsPred);
@@ -570,7 +570,7 @@ class Clause
   void canonicalizeWithoutVariables()
   {
     sortPredicatesByIdAndSenseAndTerms(0, predicates_->size()-1, NULL);
-    int i = 0, j = 0;
+    unsigned i = 0, j = 0;
     while (i < predicates_->size())
     {
       while (++j < predicates_->size() 
@@ -618,7 +618,7 @@ class Clause
     if (auxClauseData_ == NULL) auxClauseData_ = new AuxClauseData; 
     Array<Term*>*& constTermPtrs = auxClauseData_->constTermPtrs;
     if (constTermPtrs) constTermPtrs->clear();
-    for (int i = 0; i < predicates_->size(); i++)
+    for (unsigned i = 0; i < predicates_->size(); i++)
     {
       Predicate* p = (*predicates_)[i];
       for (int j = 0; j < p->getNumTerms(); j++)
@@ -654,7 +654,7 @@ class Clause
     if (auxClauseData_ == NULL || auxClauseData_->constTermPtrs == NULL) return;
 
     Array<Term*>* constTermPtrs = auxClauseData_->constTermPtrs;
-    for (int i = 0; i < constTermPtrs->size(); i++)
+    for (unsigned i = 0; i < constTermPtrs->size(); i++)
     {
       Term* t = (*constTermPtrs)[i];
       int newId = nnew->getConstantId(orig->getConstantName(t->getId()));
@@ -677,7 +677,7 @@ class Clause
     smallestVarId = 0;
     hash_set<int> intSet;
     Array<Array<int>*>* arr = new Array<Array<int>*>;
-    for (int i = 0; i < predicates_->size(); i++)
+    for (unsigned i = 0; i < predicates_->size(); i++)
     {
       Predicate* pred = (*predicates_)[i];
       for (int j = 0; j < pred->getNumTerms(); j++)
@@ -690,7 +690,7 @@ class Clause
           intSet.insert(varId);
 
           int typeId = pred->getTermTypeAsInt(j); 
-          if (typeId >= arr->size()) arr->growToSize(typeId+1, NULL);
+          if ((unsigned) typeId >= arr->size()) arr->growToSize(typeId+1, NULL);
           if ((*arr)[typeId] == NULL) (*arr)[typeId] = new Array<int>;
           (*arr)[typeId]->append(varId); 
           
@@ -725,7 +725,7 @@ class Clause
 
     Array<Predicate*> eqPreds;
     Array<Predicate*> internalPreds;
-    for (int i = 0; i < predicates_->size(); i++)
+    for (unsigned i = 0; i < predicates_->size(); i++)
     {
       if ((*predicates_)[i]->isEqualPred()) 
         eqPreds.append((*predicates_)[i]);
@@ -742,7 +742,7 @@ class Clause
       }
     }
 
-    for (int i = 0; i < eqPreds.size(); i++)
+    for (unsigned i = 0; i < eqPreds.size(); i++)
     {
       if (asInt)           eqPreds[i]->printAsInt(out);
       else if (withStrVar) eqPreds[i]->printWithStrVar(out,domain);
@@ -750,7 +750,7 @@ class Clause
       out << ((i != eqPreds.size()-1 || !internalPreds.empty())?" v ":"");      
     }
 
-    for (int i = 0; i < internalPreds.size(); i++)
+    for (unsigned i = 0; i < internalPreds.size(); i++)
     {
       if (asInt)           internalPreds[i]->printAsInt(out);
       else if (withStrVar) internalPreds[i]->printWithStrVar(out,domain);
@@ -909,7 +909,7 @@ class Clause
 
   bool noDirtyPredicates() const
   {
-    for (int i = 0; i < predicates_->size(); i++)
+    for (unsigned i = 0; i < predicates_->size(); i++)
       if ((*predicates_)[i]->isDirty()) return false;
     return true;
   }
@@ -1068,7 +1068,7 @@ class Clause
       //store the indexes of the predicates that can be grounded as gndPred
     Array<int> gndPredIndexes;
 
-    for (int i = 0; i < predicates_->size(); i++)
+    for (unsigned i = 0; i < predicates_->size(); i++)
     {
       if ((*predicates_)[i]->canBeGroundedAs(gndPred)) gndPredIndexes.append(i);
     }
@@ -1172,7 +1172,7 @@ class Clause
   {
     int id = -(t->getId());
     assert(id > 0);
-    if (id >= vgtArr->size()) vgtArr->growToSize(id+1,NULL);
+    if ((unsigned) id >= vgtArr->size()) vgtArr->growToSize(id+1,NULL);
     VarsGroundedType*& vgt = (*vgtArr)[id];
     if (vgt == NULL) 
     {
@@ -1191,7 +1191,7 @@ class Clause
                                      Array<VarsGroundedType*>*& vgtArr) const
   {    
       //for each predicate 
-    for (int i = 0; i < predicates_->size(); i++)
+    for (unsigned i = 0; i < predicates_->size(); i++)
     {
       Predicate* p = (*predicates_)[i];
         //for each variable of the predicate
@@ -1222,7 +1222,7 @@ class Clause
 
   static void deleteVarIdToVarsGroundedType(Array<VarsGroundedType*>*& vgtArr)
   {
-    for (int i = 0; i < vgtArr->size(); i++)
+    for (unsigned i = 0; i < vgtArr->size(); i++)
       if ((*vgtArr)[i]) delete (*vgtArr)[i];
     delete vgtArr;
     vgtArr = NULL;
@@ -1239,7 +1239,7 @@ class Clause
   void getVarOrder(IntHashArray& varAppearOrder) const
   {
     varAppearOrder.clear();
-    for (int i = 0; i < predicates_->size(); i++)
+    for (unsigned i = 0; i < predicates_->size(); i++)
     {
       const Predicate* p = (*predicates_)[i];
       for (int j = 0; j < p->getNumTerms(); j++)
@@ -1259,7 +1259,7 @@ class Clause
   void createVarIdToVarsGroundedType(Array<VarsGroundedType*>*& vgtArr)
   {    
       //for each predicate 
-    for (int i = 0; i < predicates_->size(); i++)
+    for (unsigned i = 0; i < predicates_->size(); i++)
     {
       Predicate* p = (*predicates_)[i];
         //for each variable of the predicate
@@ -1270,7 +1270,7 @@ class Clause
         {
           assert(t->getId()<0);
           int id = -(t->getId());
-          if (id >= vgtArr->size()) vgtArr->growToSize(id+1,NULL);
+          if ((unsigned) id >= vgtArr->size()) vgtArr->growToSize(id+1,NULL);
           VarsGroundedType*& vgt = (*vgtArr)[id];
           if (vgt == NULL)  vgt = new VarsGroundedType; 
           vgt->vars.append(t);
@@ -1284,7 +1284,7 @@ class Clause
   void createVarConstIdToTerms(Array<Array<Term*>*>*& varIdToTerms,
                                hash_map<int,Array<Term*>*>*& constIdToTerms)
   {    
-    for (int i = 0; i < predicates_->size(); i++) //for each predicate 
+    for (unsigned i = 0; i < predicates_->size(); i++) //for each predicate 
     {
       Predicate* p = (*predicates_)[i];
       for (int j = 0; j < p->getNumTerms(); j++) //for each term of predicate
@@ -1294,7 +1294,7 @@ class Clause
         {
           if (varIdToTerms == NULL) continue;
           int id = -(t->getId());
-          if (id >= varIdToTerms->size()) varIdToTerms->growToSize(id+1,NULL);
+          if ((unsigned) id >= varIdToTerms->size()) varIdToTerms->growToSize(id+1,NULL);
           Array<Term*>*& termArr = (*varIdToTerms)[id];
           if (termArr == NULL) termArr = new Array<Term*>;             
           termArr->append(t);
@@ -1332,7 +1332,7 @@ class Clause
   {
     if (varIdToTerms)
     {
-      for (int i = 0; i < varIdToTerms->size(); i++)
+      for (unsigned i = 0; i < varIdToTerms->size(); i++)
         if ((*varIdToTerms)[i]) delete (*varIdToTerms)[i];
       delete varIdToTerms;
       varIdToTerms = NULL;
@@ -1353,7 +1353,7 @@ class Clause
     //be called to restore the variables in the clause to their original 
     //values. Since the variables will be restored later, the dirty_ bit is 
     //not set.
-  void groundPredVars(const int& predIdx, Predicate* const& gndPred,
+  void groundPredVars(unsigned predIdx, Predicate* const& gndPred,
                       Array<VarsGroundedType*>*& vgtArr) const
   {
     assert((*predicates_)[predIdx]->canBeGroundedAs(gndPred));
@@ -1369,7 +1369,7 @@ class Clause
         int constId = gndPred->getTerm(i)->getId();
         VarsGroundedType* vgt = (*vgtArr)[-t->getId()];
         Array<Term*>& vars = vgt->vars;
-        for (int j = 0; j < vars.size(); j++)  vars[j]->setId(constId);
+        for (unsigned j = 0; j < vars.size(); j++)  vars[j]->setId(constId);
         vgt->isGrounded = true;
       }
       assert(t->getType() != Term::FUNCTION);
@@ -1388,7 +1388,7 @@ class Clause
   {
     assert(varIdToVarsGroundedType_);
     assert((*predicates_)[predIdx]->canBeGroundedAs(gndPred));
-    assert(predIdx < predicates_->size());
+    assert((unsigned) predIdx < predicates_->size());
 
     const Predicate* pred = (*predicates_)[predIdx];
     for (int i = 0; i < pred->getNumTerms(); i++)
@@ -1399,7 +1399,7 @@ class Clause
         int constId = gndPred->getTermId(i);
         VarsGroundedType* vgt = (*varIdToVarsGroundedType_)[-t->getId()];
         Array<Term*>& vars = vgt->vars;
-        for (int j = 0; j < vars.size(); j++)  vars[j]->setId(constId);
+        for (unsigned j = 0; j < vars.size(); j++)  vars[j]->setId(constId);
         vgt->isGrounded = true;
       }
       assert(t->getType() != Term::FUNCTION);
@@ -1423,11 +1423,11 @@ class Clause
     // restore variables to original values
   static void restoreVars(Array<VarsGroundedType*>* const & vgtArr)
   {    
-    for (int i = 1; i < vgtArr->size(); i++)
+    for (unsigned i = 1; i < vgtArr->size(); i++)
     {
       if ((*vgtArr)[i] == NULL) continue;
       Array<Term*>& vars = (*vgtArr)[i]->vars;
-      for (int j = 0; j < vars.size(); j++)  vars[j]->setId(-i);
+      for (unsigned j = 0; j < vars.size(); j++)  vars[j]->setId(-i);
       (*vgtArr)[i]->isGrounded = false;
     }
   }
@@ -1488,7 +1488,7 @@ class Clause
           addVarIdAndGndings(varId, lit->getTermTypeAsInt(i), domain, ivg);
       }
       assert(t->getType() != Term::FUNCTION);
-      assert(ivg->varIds.size() == ivg->varGndings.getNumArrays());
+      assert(ivg->varIds.size() == (unsigned) ivg->varGndings.getNumArrays());
     }
     ivg->litUnseen = true;
     return ivg;
@@ -1513,7 +1513,7 @@ class Clause
     assert(varIdToVarsGroundedType_); // this must already be created
     
       // for each literal
-    for (unsigned int i = 0; i < (unsigned int) clauseLits.size(); i++)
+    for (unsigned i = 0; i < clauseLits.size(); i++)
     {
         //the literal was grounded when a previous literal was grounded
       if (clauseLits[i] == NULL) continue;
@@ -1530,20 +1530,20 @@ class Clause
         //ground variables of the last literal we looked at throughout clause
       ArraysAccessor<int>& varGndings = ivgArr.lastItem()->varGndings;
       Array<int>& varIds = ivgArr.lastItem()->varIds;
-      for (int j = 0; j < varIds.size(); j++)
+      for (unsigned j = 0; j < varIds.size(); j++)
       {
           // get the first constant that can be used to ground the var
         int constId = varGndings.getArray(j)->item(0);
         
           // ground all occurrences of var
         Array<Term*>& vars = (*varIdToVarsGroundedType_)[-varIds[j]]->vars;
-        for (int k = 0; k < vars.size(); k++) vars[k]->setId(constId);
+        for (unsigned k = 0; k < vars.size(); k++) vars[k]->setId(constId);
       }
     
         //store subsequent literals that are grounded when literal i is grounded
       Array<Predicate*>& subseqGndLits = ivgArr.lastItem()->subseqGndLits;
 
-      for (int j = i + 1; j < clauseLits.size(); j++)
+      for (unsigned j = i + 1; j < clauseLits.size(); j++)
       {
         Predicate* subseqLit = clauseLits[j];
         if (subseqLit == NULL) continue;
@@ -1567,7 +1567,7 @@ class Clause
     // Also sets to -1 the ids of the parent terms of functions in ivgArr[i]. 
   static void deleteAllLitIdxVarsGndings(Array<LitIdxVarIdsGndings*>& ivgArr)
   { 
-    for (int i = 0; i < ivgArr.size(); i++)
+    for (unsigned i = 0; i < ivgArr.size(); i++)
     {
       //ivgArr[i]->varGndings.deleteArraysAndClear();
       delete ivgArr[i];
@@ -1609,7 +1609,7 @@ class Clause
     assert(predicates_->size() == clauseLits.size());
 
     Array<pair<double, Predicate*> > arr;
-    for (int i = 0; i < clauseLits.size(); i++)
+    for (unsigned i = 0; i < clauseLits.size(); i++)
     {
       Predicate* lit = clauseLits[i];
     
@@ -1650,7 +1650,7 @@ class Clause
   
     quicksortLiterals((pair<double,Predicate*>*) arr.getItems(),0,arr.size()-1);
     assert(arr.size() == clauseLits.size());
-    for (int i = 0; i < arr.size(); i++) clauseLits[i] = arr[i].second;
+    for (unsigned i = 0; i < arr.size(); i++) clauseLits[i] = arr[i].second;
   }
 
 
@@ -1661,7 +1661,7 @@ class Clause
     TruthValue tv = db->getValue(lit);
     lit->setTruthValue(tv);
     if (db->sameTruthValueAndSense(tv, lit->getSense())) return true;
-    for (int i = 0; i < subseqLits.size(); i++)
+    for (unsigned i = 0; i < subseqLits.size(); i++)
     {
       tv = db->getValue(subseqLits[i]);
       subseqLits[i]->setTruthValue(tv);
@@ -1676,7 +1676,7 @@ class Clause
     PredicateSet predSet; // used to detect duplicates
     PredicateSet::iterator iter;
     
-    for (int i = 0; i < predicates_->size(); i++)
+    for (unsigned i = 0; i < predicates_->size(); i++)
     {
       Predicate* predicate = (*predicates_)[i];
       assert(predicate->isGrounded());
@@ -1715,7 +1715,7 @@ class Clause
     sameTruthValueAndSense = false;
     gndPredPosHaveSameSense = true;
     bool prevSense = false;
-    for (int i = 0; i < set->size(); i++)
+    for (unsigned i = 0; i < set->size(); i++)
     {
       int gndPredIdx = gndPredIndexes[(*set)[i]];
       Predicate* pred = (*predicates_)[gndPredIdx];
@@ -1738,7 +1738,7 @@ class Clause
   double countNumGroundings()
   {
     double n = 1;
-    for (int i = 1; i < varIdToVarsGroundedType_->size(); i++)
+    for (unsigned i = 1; i < varIdToVarsGroundedType_->size(); i++)
     {
       if (!((*varIdToVarsGroundedType_)[i]->isGrounded))
         n *= (*varIdToVarsGroundedType_)[i]->numGndings;
@@ -1753,7 +1753,7 @@ class Clause
                                const double& count)
   {
     memset(inComb, false, inCombSize*sizeof(bool));
-    for (int i = 0; i < set->size(); i++)  inComb[(*set)[i]] = true;
+    for (unsigned i = 0; i < set->size(); i++)  inComb[(*set)[i]] = true;
     Array<int> multDArrIndexes(inCombSize); //e.g. [0][1][0][1]
     for (int i = 0; i < inCombSize; i++)
     {
@@ -1773,9 +1773,9 @@ class Clause
                            const double& count)
   {
     memset(inComb, false, inCombSize*sizeof(bool));
-    for (int i = 0; i < set->size(); i++)  inComb[(*set)[i]] = true;
+    for (unsigned i = 0; i < set->size(); i++)  inComb[(*set)[i]] = true;
     
-    for (int i = 0; i < falseSet->size(); i++)
+    for (unsigned i = 0; i < falseSet->size(); i++)
     {
       int idx = inCombIndexes[(*falseSet)[i]];
       assert(inComb[idx] == true);
@@ -1796,12 +1796,12 @@ class Clause
 
   ////////////////////// for getting unknown clauses ////////////////////////
   void getBannedPreds(Array<Predicate*>& bannedPreds,
-                      const int& gndPredIdx,
+                      unsigned gndPredIdx,
                       const GroundPredicate* const & groundPred,
                       const Predicate* const & gndPred) const
   {
     assert(gndPredIdx < predicates_->size());
-    for (int i = 0; i < gndPredIdx; i++)
+    for (unsigned i = 0; i < gndPredIdx; i++)
     {
       if ( (groundPred && (*predicates_)[i]->canBeGroundedAs(groundPred)) ||
            (gndPred && (*predicates_)[i]->canBeGroundedAs((Predicate*)gndPred)))
@@ -1818,12 +1818,12 @@ class Clause
     if (bannedPreds.size() == 0) return;
 
     int a;
-    for (int i = 0; i < ivgArr.size(); i++)
+    for (unsigned i = 0; i < ivgArr.size(); i++)
     {
       LitIdxVarIdsGndings* ivg = ivgArr[i];
       a = bannedPreds.find(clauseLits[ivg->litIdx]);
       if (a >= 0) ivg->bannedPreds.append(bannedPreds[a]);
-      for (int j = 0; j < ivg->subseqGndLits.size(); j++)
+      for (unsigned j = 0; j < ivg->subseqGndLits.size(); j++)
       {
         a = bannedPreds.find(ivg->subseqGndLits[j]);
         if (a >= 0) ivg->bannedPreds.append(bannedPreds[a]);        
@@ -1838,7 +1838,7 @@ class Clause
                                     const GroundPredicate* const & groundPred,
                                     const Predicate* const & gndPred)
   {
-    for (int i = 0; i < bannedPreds.size(); i++)
+    for (unsigned i = 0; i < bannedPreds.size(); i++)
     {
       if ( (groundPred && bannedPreds[i]->same(groundPred)) ||
            (gndPred    && bannedPreds[i]->same((Predicate*)gndPred)) ) 
@@ -1848,7 +1848,7 @@ class Clause
   }
 
 
-  bool containsGndPredBeforeIdx(const int& gndPredIdx, 
+  bool containsGndPredBeforeIdx(unsigned gndPredIdx, 
                                 const GroundPredicate* const & groundPred,
                                 const Predicate* const & gndPred)
   {
@@ -1858,13 +1858,13 @@ class Clause
 
     if (groundPred)
     {
-      for (int i = 0; i < gndPredIdx; i++)
+      for (unsigned i = 0; i < gndPredIdx; i++)
         if ((*predicates_)[i]->same(groundPred)) return true;
     }
     else
     {
       assert(gndPred);
-      for (int i = 0; i < gndPredIdx; i++)
+      for (unsigned i = 0; i < gndPredIdx; i++)
         if ((*predicates_)[i]->same((Predicate*)gndPred)) return true; 
     }
     return false;
@@ -1960,7 +1960,7 @@ class Clause
         // Put the original clause as the only clause into partGroundedClauses
       Array<Predicate*>* clauseLitsCopy = new Array<Predicate*>;
       clauseLitsCopy->growToSize(origClauseLits->size());
-      for (int i = 0; i < origClauseLits->size(); i++)
+      for (unsigned i = 0; i < origClauseLits->size(); i++)
         (*clauseLitsCopy)[i] = new Predicate(*(*origClauseLits)[i]);
       partGroundedClauses.append(clauseLitsCopy);
     }
@@ -1971,10 +1971,10 @@ class Clause
     if (clausedebug >= 2)
     {
       cout << "Partially grounded clauses to be completed: " << endl;
-      for (int pgcIdx = 0; pgcIdx < partGroundedClauses.size(); pgcIdx++)
+      for (unsigned pgcIdx = 0; pgcIdx < partGroundedClauses.size(); pgcIdx++)
       {
         cout << "\t";
-        for (int i = 0; i < partGroundedClauses[pgcIdx]->size(); i++)
+        for (unsigned i = 0; i < partGroundedClauses[pgcIdx]->size(); i++)
         {
           (*partGroundedClauses[pgcIdx])[i]->printWithStrVar(cout, domain);
           cout << " ";
@@ -1987,7 +1987,7 @@ class Clause
       // Go through each clause in partGroundedClauses (nodes of the branch and
       // bound algorithm if using inverted index; otherwise, the original
       // clause), ground them out and check truth values
-    for (int pgcIdx = 0; pgcIdx < partGroundedClauses.size(); pgcIdx++)
+    for (unsigned pgcIdx = 0; pgcIdx < partGroundedClauses.size(); pgcIdx++)
     {
         // clauseLits is a sorted copy of predicates_
       Array<Predicate*> clauseLits = *(partGroundedClauses[pgcIdx]);
@@ -1995,7 +1995,7 @@ class Clause
         // Set the var to groundings in this clause to be those in clauseLits
       Array<int>* origVarIds = new Array<int>;
       
-      for (int i = 0; i < clauseLits.size(); i++)
+      for (unsigned i = 0; i < clauseLits.size(); i++)
       {
         assert(clauseLits[i]->getNumTerms() ==
                (*origClauseLits)[i]->getNumTerms());
@@ -2013,7 +2013,7 @@ class Clause
               int constId = newTerm->getId();
               assert(constId >= 0);
               Array<Term*>& vars = (*varIdToVarsGroundedType_)[-varId]->vars;
-              for (int k = 0; k < vars.size(); k++) vars[k]->setId(constId);
+              for (unsigned k = 0; k < vars.size(); k++) vars[k]->setId(constId);
             }
           }
         }
@@ -2066,7 +2066,7 @@ class Clause
             {
               Array<Term*>& vars =
                 (*varIdToVarsGroundedType_)[-varIds[v++]]->vars;
-              for (int i = 0; i < vars.size(); i++) vars[i]->setId(constId);
+              for (unsigned i = 0; i < vars.size(); i++) vars[i]->setId(constId);
             }
           }
 
@@ -2107,7 +2107,7 @@ class Clause
             if (proceed)
             {
                 // if there are more literals
-              if (ivgArrIdx + 1 < ivgArr.size())
+              if ((unsigned) ivgArrIdx + 1 < ivgArr.size())
               {
                 lookAtNextLit = true;
                 ivgArrIdx++; // move up stack
@@ -2155,7 +2155,7 @@ class Clause
               if (checkSatOnly) return 1;
                 //count the number of combinations of remaining variables
               double numComb = 1;
-              for (int i = ivgArrIdx + 1; i < ivgArr.size(); i++)
+              for (unsigned i = ivgArrIdx + 1; i < ivgArr.size(); i++)
               {
                 int numVar = ivgArr[i]->varGndings.getNumArrays();
                 for (int j = 0; j < numVar; j++)
@@ -2175,7 +2175,7 @@ class Clause
             else
             {
                 // if there are more literals
-              if (ivgArrIdx + 1 < ivgArr.size())
+              if ((unsigned) ivgArrIdx + 1 < ivgArr.size())
               {
                 if (clausedebug >= 2) cout << "Moving to next literal" << endl;
                 lookAtNextLit = true;
@@ -2221,12 +2221,12 @@ class Clause
       } // while stack is not empty
 
         // Restore variables
-      for (int i = 0; i < origVarIds->size(); i++)
+      for (unsigned i = 0; i < origVarIds->size(); i++)
       {
         int varId = (*origVarIds)[i];
         assert(varId < 0);
         Array<Term*>& vars = (*varIdToVarsGroundedType_)[-varId]->vars;
-        for (int j = 0; j < vars.size(); j++) vars[j]->setId(varId);
+        for (unsigned j = 0; j < vars.size(); j++) vars[j]->setId(varId);
         (*varIdToVarsGroundedType_)[-varId]->isGrounded = false;
       }
       delete origVarIds;
@@ -2266,7 +2266,7 @@ class Clause
       //the 1st and 2nd predicates in gndPredIndexes are not grounded and
       //the 3rd and 4th are grounded
     Array<int> dim;
-    for (int i = 0; i < gndPredIndexes.size(); i++) dim.append(2);
+    for (unsigned i = 0; i < gndPredIndexes.size(); i++) dim.append(2);
       //WARNING: this may take up a lot of memory when gndPred can be grounded
       //at many positions in the clause
     MultDArray<double> gndedPredPosArr(&dim);
@@ -2301,7 +2301,7 @@ class Clause
       double cnt, numGndings = countNumGroundings();
       if (tiedClauses)
       {
-        for (int i = 0; i < tiedClauses->size(); i++)
+        for (unsigned i = 0; i < tiedClauses->size(); i++)
         {
           double gndings = (*tiedClauses)[i]->getNumGroundings(domain);
           cnt += gndings;
@@ -2345,7 +2345,7 @@ class Clause
     
         //find the indexes that are in this combination
       Array<int> inCombIndexes;
-      for (int i = 0; i < set->size(); i++)  inCombIndexes.append((*set)[i]);
+      for (unsigned i = 0; i < set->size(); i++)  inCombIndexes.append((*set)[i]);
 
         // subtract all the repeated counts of cntDueToThisComb
       PowerSetInstanceVars psInstVars;
@@ -2378,7 +2378,7 @@ class Clause
     PredicateSet::iterator iter;
     bool isEmpty = true;
  
-    for (int i = 0; i < predicates_->size(); i++)
+    for (unsigned i = 0; i < predicates_->size(); i++)
     {
       Predicate* predicate = (*predicates_)[i];
       assert(predicate); 
@@ -2421,7 +2421,7 @@ class Clause
     if (!active && db->sameTruthValueAndSense(tv, lit->getSense()))
       return false;
 
-    for (int i = 0; i < subseqLits.size(); i++)
+    for (unsigned i = 0; i < subseqLits.size(); i++)
     {
 //cout << "subseqLit " << i << " ";
 //subseqLits[i]->printWithStrVar(cout, db->getDomain());
@@ -2444,7 +2444,7 @@ class Clause
                                    bool const & ignoreActivePreds)
   {
     bool isSatisfied = false;
-    for (int i = 0; i < predicates_->size(); i++)
+    for (unsigned i = 0; i < predicates_->size(); i++)
     {
       Predicate* lit = getPredicate(i);
       assert(lit->isGrounded());
@@ -2494,7 +2494,7 @@ class Clause
     assert(predicates_->size() == clauseLits.size());
 
     Array<pair<double, Predicate*> > arr;
-    for (int i = 0; i < clauseLits.size(); i++)
+    for (unsigned i = 0; i < clauseLits.size(); i++)
     {
       Predicate* lit = clauseLits[i];
       bool isIndexable = lit->isIndexable(wt_ >= 0);
@@ -2533,7 +2533,7 @@ class Clause
   
     quicksortLiterals((pair<double,Predicate*>*) arr.getItems(),0,arr.size()-1);
     assert(arr.size() == clauseLits.size());
-    for (int i = 0; i < arr.size(); i++)
+    for (unsigned i = 0; i < arr.size(); i++)
     {
   	  clauseLits[i] = arr[i].second;
   	  //cout << clauseLits[i]->getSense() << " " << clauseLits[i]->getName()
@@ -2563,7 +2563,7 @@ class Clause
     if (clausedebug >= 1)
     {
       cout << "Grounding indexable literals for ";
-      for (int i = 0; i < clauseLits.size(); i++)
+      for (unsigned i = 0; i < clauseLits.size(); i++)
       {
         clauseLits[i]->printWithStrVar(cout, domain);
         cout << " ";
@@ -2576,11 +2576,11 @@ class Clause
       // Initially, resultingClauses holds only copies of the original clause
     Array<Predicate*>* clauseLitsCopy = new Array<Predicate*>;
     clauseLitsCopy->growToSize(clauseLits.size());
-    for (int i = 0; i < clauseLits.size(); i++)
+    for (unsigned i = 0; i < clauseLits.size(); i++)
       (*clauseLitsCopy)[i] = new Predicate(*clauseLits[i]);
     resultingClauses.append(clauseLitsCopy);
       // Go through each literal and, if indexable, branch and bound on it
-    for (int litIdx = 0; litIdx < clauseLits.size(); litIdx++)
+    for (unsigned litIdx = 0; litIdx < clauseLits.size(); litIdx++)
     {
         // Indexable lit
       if (clauseLits[litIdx]->isIndexable(posClause) &&
@@ -2598,12 +2598,12 @@ class Clause
                << endl;
         }
           // pgc = partially grounded clause
-        for (int pgcIdx = 0; pgcIdx < resultingClauses.size(); pgcIdx++)
+        for (unsigned pgcIdx = 0; pgcIdx < resultingClauses.size(); pgcIdx++)
         {
           if (clausedebug >= 2)
           {
             cout << "Resulting clause before " << pgcIdx << ": ";
-            for (int i = 0; i < resultingClauses[pgcIdx]->size(); i++)
+            for (unsigned i = 0; i < resultingClauses[pgcIdx]->size(); i++)
             {
               (*resultingClauses[pgcIdx])[i]->printWithStrVar(cout, domain);
               cout << " ";
@@ -2628,7 +2628,7 @@ class Clause
           if (clausedebug >= 2)
           {
             cout << "indexedGndings: " << endl;
-            for (int i = 0; i < indexedGndings->size(); i ++)
+            for (unsigned i = 0; i < indexedGndings->size(); i ++)
             {
               cout << "\t";
               (*indexedGndings)[i]->printWithStrVar(cout, domain);
@@ -2645,7 +2645,7 @@ class Clause
                  << tmpClauses.size() << endl;
           }
           
-          for (int i = 0; i < indexedGndings->size(); i++)
+          for (unsigned i = 0; i < indexedGndings->size(); i++)
           {
               // Reference clause is what was branched on. First, copy this
               // into tmpClauses. Later, variables are replaced with the
@@ -2656,7 +2656,7 @@ class Clause
               growToSize(resultingClauses[pgcIdx]->size());
             if (clausedebug >= 2)
               cout << "Tmp clause before " << oldTmpSize + i << ": ";
-            for (int predNo = 0; predNo < tmpClauses[oldTmpSize + i]->size();
+            for (unsigned predNo = 0; predNo < tmpClauses[oldTmpSize + i]->size();
                  predNo++)
             {
               (*tmpClauses[oldTmpSize + i])[predNo] =
@@ -2683,7 +2683,7 @@ class Clause
                 int constId = (*indexedGndings)[i]->getTerm(j)->getId();
                 assert(constId >= 0);
                   // Ground this var in lit and subsequent lits
-                for (int k = litIdx; k < tmpClauses[oldTmpSize + i]->size();
+                for (unsigned k = litIdx; k < tmpClauses[oldTmpSize + i]->size();
                      k++)
                 {
                   Predicate* pred = (*tmpClauses[oldTmpSize + i])[k];
@@ -2701,7 +2701,7 @@ class Clause
             if (clausedebug >= 2)
             {
               cout << "Tmp clause after " << oldTmpSize + i << ": ";
-              for (int d = 0; d < tmpClauses[oldTmpSize + i]->size(); d++)
+              for (unsigned d = 0; d < tmpClauses[oldTmpSize + i]->size(); d++)
               {
                 (*tmpClauses[oldTmpSize + i])[d]->printWithStrVar(cout, domain);
                 cout << " ";
@@ -2713,9 +2713,9 @@ class Clause
         }
           // Replace the clauses in previous level with the new level
           // First, get rid of the old ones
-        for (int pgcIdx = 0; pgcIdx < resultingClauses.size(); pgcIdx++)
+        for (unsigned pgcIdx = 0; pgcIdx < resultingClauses.size(); pgcIdx++)
         {
-          for (int i = 0; i < resultingClauses[pgcIdx]->size(); i++)
+          for (unsigned i = 0; i < resultingClauses[pgcIdx]->size(); i++)
             delete (*resultingClauses[pgcIdx])[i];
           delete resultingClauses[pgcIdx];
         }
@@ -2735,7 +2735,7 @@ class Clause
           resultingClauses.shrinkToSize(tmpClauses.size());
         }
           // Copy the new ones into resultingClauses
-        for (int i = 0; i < tmpClauses.size(); i++)
+        for (unsigned i = 0; i < tmpClauses.size(); i++)
         {
           resultingClauses[i] = tmpClauses[i];
         }
@@ -2756,10 +2756,10 @@ class Clause
     if (clausedebug >= 2)
     {
       cout << "Resulting clauses returned from grounding indexables: " << endl;
-      for (int pgcIdx = 0; pgcIdx < resultingClauses.size(); pgcIdx++)
+      for (unsigned pgcIdx = 0; pgcIdx < resultingClauses.size(); pgcIdx++)
       {
         cout << "\t";
-        for (int i = 0; i < resultingClauses[pgcIdx]->size(); i++)
+        for (unsigned i = 0; i < resultingClauses[pgcIdx]->size(); i++)
         {
           (*resultingClauses[pgcIdx])[i]->printWithStrVar(cout, domain);
           cout << " ";
@@ -2805,7 +2805,7 @@ class Clause
 
       	//store the indexes of the predicates that can be grounded as gndPred
       Array<int> gndPredIndexes;
-      for (int i = 0; i < predicates_->size(); i++)
+      for (unsigned i = 0; i < predicates_->size(); i++)
 	    if ((*predicates_)[i]->canBeGroundedAs(gndPred))
           gndPredIndexes.append(i);
     
@@ -2814,7 +2814,7 @@ class Clause
 	  unarySet.append(-1);
 
       activeClauseCnt = 0;
-      for (int i = 0; i < gndPredIndexes.size(); i++)
+      for (unsigned i = 0; i < gndPredIndexes.size(); i++)
       {
           //ground the predicates in current combination
         bool sameTruthValueAndSense; //a ground pred has the same tv and sense
@@ -2838,7 +2838,7 @@ class Clause
     }
 
     assert(!activeGroundClauses ||
-           activeGroundClauses->size() == activeClauseCnt);
+           activeGroundClauses->size() == (unsigned) activeClauseCnt);
     return (stillActivating == 1);
   }
 

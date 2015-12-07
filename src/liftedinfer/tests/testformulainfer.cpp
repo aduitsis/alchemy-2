@@ -239,7 +239,7 @@ void TestFormulaInfer::readGroundTruth(int id,vector<vector<vector<int> > >& tru
 		LStringConversionUtils::toDoubleArr(evs,weights);
 	}
 	trueIndexes.resize(numClauses);
-	int trueIndexIter=0;
+	//int trueIndexIter=0;
 	for(int t=0;t<numClauses;t++)
 	{
 		filestr.getline(buf,1024);

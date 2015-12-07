@@ -82,7 +82,7 @@ int LPTPSampler::runPTP(vector<WClause*>& CNF,LVRCluster* lvrCluster,bool rbesti
 //if we know our cluster is a single propositional element, we can do fast sampling
 void LPTPSampler::doLightWeightSampling(LVRCluster* lvrCluster, vector<WClause*> clauses,bool rbestimator)
 {
-	int atomId = lvrCluster->elements[0]->symbol->id;
+  int atomId = lvrCluster->elements[0]->symbol->id; (void) atomId;
 	LogDouble posWt(1,false);
 	LogDouble negWt(1,false);
 	bool dontcare=true;

@@ -34,12 +34,12 @@ struct LProposalDistributionElement
 	void updateProposals(double learningRate);
 
 	Atom* atom;
-	int id;
 	vector<LProposalTable*> proposalTables;
-	vector<bool> isolatedTerms;
 	//do not delete pointers
 	vector<LProposalDistributionElement*> parents;
-	int nTrueValues;
+  	vector<bool> isolatedTerms;
+  	int id;
+  	int nTrueValues;
 	LogDouble probability;
 
 };

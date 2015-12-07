@@ -130,7 +130,7 @@ class GroundPredicate
     const PredicateTemplate* pt = domain->getPredicateTemplate(getId());
     assert(pt);
     Predicate* pred = new Predicate(pt);
-    for (int j = 0; j < pt->getNumTerms(); j++)
+    for (unsigned j = 0; j < pt->getNumTerms(); j++)
       pred->appendTerm(new Term(getTermId(j), (void*)pred, true));
     return pred;
   }
@@ -290,12 +290,12 @@ class GroundPredicate
 
     if (negGndClauses_)
     {
-      for (int i = 0; i < negGndClauses_->size(); i++)
+      for (unsigned i = 0; i < negGndClauses_->size(); i++)
         size += ((*negGndClauses_)[i]->sizeKB());
     }
     if (posGndClauses_)
     {
-      for (int i = 0; i < posGndClauses_->size(); i++)
+      for (unsigned i = 0; i < posGndClauses_->size(); i++)
         size += ((*posGndClauses_)[i]->sizeKB());
     }
 

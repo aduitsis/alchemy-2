@@ -678,7 +678,7 @@ class BP : public Inference
       }
           
       maxDiff = -1;
-      maxDiffNodeIndex = -1;
+      maxDiffNodeIndex = -1; (void)maxDiffNodeIndex;
       for (int i = 0; i < numNodes; i++)
       {
         if (bpdebug)
@@ -845,7 +845,7 @@ class BP : public Inference
        { 
         node = (*nodesByPredId)[i];
 	    node->getProbs(probs);         
-        exp = node->getExp();
+            exp = node->getExp(); (void) exp;
         SuperPred * superPred = node->getSuperPred();
 
         if (superPred)

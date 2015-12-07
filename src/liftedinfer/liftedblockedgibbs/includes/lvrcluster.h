@@ -49,11 +49,11 @@ struct LTermShare
 	}
 	void print()
 	{
-		for(int i=0;i<shared.size();i++)
+		for(unsigned i=0;i<shared.size();i++)
 		{
 			if(shared[i])
 			{
-				for(int j=0;j<sharedAtoms[i].size();j++)
+				for(unsigned j=0;j<sharedAtoms[i].size();j++)
 					sharedAtoms[i].at(j)->print(false);
 			}
 			cout<<" :: ";

@@ -238,7 +238,7 @@ void Domain::reorderConstants(MLN* const & mln,
   Array<Array<int>*>* newConstantsByType = new Array<Array<int>*>;
   Array<Array<int>*>* newExternalConstantsByType = new Array<Array<int>*>;
 
-  int prevNewConstId = -1;
+  int prevNewConstId = -1; (void) prevNewConstId;
   bool constChanged = false;
   for (int i = 0; i < constantsByType_->size(); i++)
   {
@@ -329,7 +329,7 @@ void Domain::reorderConstants(MLN* const & mln)
   Array<Array<int>*>* newConstantsByType = new Array<Array<int>*>;
   Array<Array<int>*>* newExternalConstantsByType = new Array<Array<int>*>;
 
-  int prevNewConstId = -1;
+  int prevNewConstId = -1; (void) prevNewConstId;
   bool constChanged = false;
   assert(constantsByType_->size() == externalConstantsByType_->size());
   for (int i = 0; i < constantsByType_->size(); i++)

@@ -364,7 +364,7 @@ Array<HyperCube *> *createGroundHyperCubes(IntArrayHashArray * const & tupleCons
 	 if(tupleConstantsArr->size() == 0)
 		  return new Array<HyperCube *>();
 	 Array<int> * tupleConstants;
-	 tupleConstants = (*tupleConstantsArr)[0];
+	 tupleConstants = (*tupleConstantsArr)[0]; (void) tupleConstants;
      HyperCube *hyperCube;
      Array<HyperCube *> *hyperCubes = new Array<HyperCube *>();
 
