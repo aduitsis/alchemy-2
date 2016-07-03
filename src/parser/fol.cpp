@@ -75,28 +75,6 @@
 extern int yydebug;
 #endif
 
-/* Tokens.  */
-#ifndef YYTOKENTYPE
-# define YYTOKENTYPE
-   /* Put the tokens into the symbol table, so that GDB and other debuggers
-      know about them.  */
-   enum yytokentype {
-     ZZ_NUM = 258,
-     ZZ_DOTDOTDOT = 259,
-     ZZ_STRING = 260,
-     ZZ_INCLUDE = 261,
-     ZZ_PREDICATE = 262,
-     ZZ_FUNCTION = 263,
-     ZZ_CONSTANT = 264,
-     ZZ_VARIABLE = 265,
-     ZZ_TYPE = 266,
-     ZZ_FORALL = 267,
-     ZZ_EXIST = 268,
-     ZZ_EQUIV = 269,
-     ZZ_IMPLY = 270
-   };
-#endif
-
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
 typedef int YYSTYPE;
 # define YYSTYPE_IS_TRIVIAL 1
