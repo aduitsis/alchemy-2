@@ -175,7 +175,10 @@ CPPFILES=$(UTIL)/arguments.cpp $(UTIL)/powerset.cpp $(UTIL)/random.cpp\
 ##############################################################################
 #EXECUTABLES: add executables rules here
 
-all: learnwts infer learnstruct liftedinfer runliftedinfertests
+all: binobj learnwts infer learnstruct liftedinfer runliftedinfertests
+
+binobj:
+	mkdir -p ${CURDIR}/bin/obj
 
 learnwts: $(OBJDIR)/learnwts.oo
 	cp $(OBJDIR)/learnwts.oo $(BIN)/learnwts
